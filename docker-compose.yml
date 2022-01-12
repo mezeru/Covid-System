@@ -1,5 +1,23 @@
 version: "3.7"
 services:
+  # wal-listner:
+  #   image: medblocks/wal-listner
+  #   environment:
+  #     WAIT_HOSTS: db:5432, openehr:8080
+  #     WAIT_TIMEOUT: 300
+  #     WAIT_AFTER: 5
+  #     WAIT_SLEEP_INTERVAL: 5
+  #   command: sh -c "/wait && /wal-listner -c /app/config.yml"
+  #   volumes:
+  #     - ./wal.yml:/app/config.yml
+  #   depends_on:
+  #     - db
+  #     - openehr
+  #     - nats
+  # nats:
+  #   image: docker.io/library/nats-streaming:0.11.2
+  #   ports:
+  #     - "4222:4222"
   openehr:
     image: "ehrbase/ehrbase:0.16.5"
     environment:
@@ -12,7 +30,6 @@ services:
       - db
     ports:
       - "8080:8080"
-
   db:
     image: postgres
     command:
@@ -27,6 +44,28 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - 5432:5432
+
+  fhir:
+    image: "hapiproject/hapi:v5.3.0"
+    ports:
+      - "8090:8080"
+    environment:
+      spring.datasource.url: "jdbc:postgresql://fhir-db:5432/hapi_r4"
+      spring.datasource.username: admin
+      spring.datasource.password: admin
+      spring.datasource.driverClassName: org.postgresql.Driver
+      hapi.fhir.subscription.resthook_enabled: "true"
+      hapi.fhir.subscription.websocket_enabled: "true"
+      hapi.fhir.client_id_strategy: ANY
+  fhir-db:
+    image: postgres
+    volumes:
+      - fhir-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: hapi_r4
+
   caddy:
     image: caddy:2.4.1
     ports:
@@ -39,5 +78,6 @@ services:
       - caddy_config:/config
 volumes:
   db-data:
+  fhir-db-data:
   caddy_data:
   caddy_config:
