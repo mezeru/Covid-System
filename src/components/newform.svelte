@@ -1,7 +1,9 @@
 <script>
   import { FHIR, openehr } from "../links";
   import { useNavigate } from "svelte-navigator";
-  import {convertResource} from "./fhir/fhirResource";
+  import {convertResource} from "./resouces/fhirResource";
+  import {EHR} from "./resouces/openEHR";
+
   let ehrId;
   const navigo = useNavigate();
 
@@ -13,65 +15,31 @@
       patient[i] = j;
     }
 
-    console.log({patient});
-
-    let fhirResource = convertResource(patient);
-    console.log({fhirResource});
-
+    const fhirResource = convertResource(patient);
     
+    // Creating FHIR Resource
 
-    // try {
-    //   const respEHR = await openehr.post(
-    //     "/ehr",
-    //     {
-    //       _type: "EHR_STATUS",
-    //       archetype_node_id: "openEHR-EHR-EHR_STATUS.generic.v1",
-    //       name: {
-    //         value: "EHR Status",
-    //       },
-    //       subject: {
-    //         external_ref: {
-    //           id: {
-    //             _type: "GENERIC_ID",
-    //             value: patient.AdhaarNo << 2,
-    //             scheme: "id_scheme",
-    //           },
-    //           namespace: "examples",
-    //           type: "PERSON",
-    //         },
-    //       },
-    //       is_modifiable: true,
-    //       is_queryable: true,
-    //     },
-    //     {
-    //       headers: {
-    //         Accept: "application/json",
-    //       },
-    //     }
-    //   );
-
-    //   if (respEHR.status === 204) {
-    //     patient["ehrId"] = respEHR.headers["etag"].replace(/['"]+/g, "");
-    //     ehrId = patient["ehrId"];
-    //     console.log(ehrId);
-
-    //     try {
-    //       const resp = await FHIR.post(`new`, patient);
-
-    //       if (resp.status == 200) {
-    //         navigo(`/patient/${patient.AdhaarNo}/${ehrId}/${patient.Name}`);
-    //       }
-    //     } catch (e) {
-    //       console.log(e);
-    //     }
-    //   }
-    // } catch (e) {
-    //   if (e.response.status == 400) {
-    //     alert(e);
-    //   } else {
-    //     alert("Server is Down");
-    //   }
-    // }
+    try{
+      const fhirResp = await FHIR.post("/Patient",fhirResource);
+      
+      if(fhirResp.status === 201){
+        try{
+          const respEHR = await openehr.put("/ehr/id",EHR(patient.AdhaarNo),
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+        }
+        catch(e){
+          console.log({e});
+        }
+      }
+    }
+    catch(e){
+      
+    }
   };
 </script>
 
