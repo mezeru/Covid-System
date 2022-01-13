@@ -8,7 +8,7 @@
   import { each } from "svelte/internal";
   import { fade, fly } from "svelte/transition";
   import { quintOut } from "svelte/easing";
-  import { mongo } from "../service";
+  import { FHIR } from "../links";
   import loading1 from "../../assets/loading1.svg";
 
   let patients = [];
@@ -16,7 +16,7 @@
   let fuseObj;
   
   onMount(async () => {
-    const resp = await mongo.get("all");
+    const resp = await FHIR.get("/Patient");
     patients = resp.data;
 
     const options = {
@@ -52,8 +52,8 @@
     if (confirmed){
       loading = true;
       patients = [];
-    const resp = await mongo.delete(`/delete?AdhaarNo=${id}`);
-    const r = await mongo.get("all");
+    const resp = await fhir.delete(`/delete?AdhaarNo=${id}`);
+    const r = await fhir.get("all");
     patients = r.data;
     }
     

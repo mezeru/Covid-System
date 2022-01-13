@@ -1,11 +1,11 @@
 <script>
   import axios from "axios";
-  import { mongo } from "../service";
+  import { FHIR } from "../links";
   let number;
   const handleSubmit = async () => {
     console.log(number);
     try {
-      const resp = await mongo.delete(`/delete?AdhaarNo=${number}`);
+      const resp = await FHIR.delete(`/delete?AdhaarNo=${number}`);
 
       if (resp.status == 200) {
         alert("Patient Data Deleted");

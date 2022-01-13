@@ -1,7 +1,7 @@
 <script>
   import axios from "axios";
+import { FHIR } from "../links";
   import { useNavigate } from "svelte-navigator";
-  import { mongo } from "../service";
   let number;
   let alertBol = false;
   let data;
@@ -11,7 +11,7 @@
   const handleSubmit = async () => {
     console.log(number);
     try {
-      const resp = await mongo.get(`search?AdhaarNo=${number}`);
+      const resp = await FHIR.get(`search?AdhaarNo=${number}`);
 
       if (resp.status == 200) {
         display = 1;

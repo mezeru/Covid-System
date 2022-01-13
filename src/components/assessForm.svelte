@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
   import { useNavigate } from "svelte-navigator";
-  import { ehrscape } from "../service";
+  import { ehrscape } from "../links";
 
   export let ehrId;
   export let compId = null;

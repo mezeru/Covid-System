@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { openehr } from "../service";
+  import { openehr } from "../links";
 
   import { onMount } from "svelte";
   let templates = [];

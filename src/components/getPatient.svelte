@@ -13,7 +13,7 @@
   import { fade, fly } from "svelte/transition";
   import LineChart from "./LineChart.svelte";
   import loading2 from "../../assets/loading2.svg";
-  import { mongo, openehr } from "../service";
+  import { FHIR, openehr } from "../links";
 
   const navigate = useNavigate();
 

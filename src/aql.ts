@@ -1,4 +1,4 @@
-import { openehr } from "./service";
+import { openehr } from "./links";
 
 export const formatAql = (aqlResultData): any => {
   const { columns, rows } = aqlResultData;
