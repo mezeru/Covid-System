@@ -215,7 +215,7 @@
         <sl-button
           type="success"
           on:click|preventDefault={() => {
-            navigate(`/assessment-form/${ehrId}/None`);
+            navigate(`/assessment-form/${ehrId}/None/${id}`);
           }}
         >
           <sl-icon name="plus-square-fill" slot="prefix" />Add Assessment

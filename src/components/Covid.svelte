@@ -7,7 +7,8 @@
 import { encounterResource } from "./resouces/fhirEncounter";
 
   export let ehrId;
-  export let compId = null;
+  export let compId;
+  export let adhaarId;
   let form;
   let loading = false;
   let navigation;
@@ -41,7 +42,7 @@ import { encounterResource } from "./resouces/fhirEncounter";
       .then((response) => {
         if (response.status == 200) {
           if(compId === "None"){
-            // encounterResource(,ehrId,0)
+            encounterResource(adhaarId,ehrId,0)
           }
           console.log(navigo(-1));
         }

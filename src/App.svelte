@@ -29,7 +29,7 @@
 
     <Route path="/postdata/:ehrId/:compId" component={CompoForm} />
 
-    <Route path="/assessment-form/:ehrId/:compId" component={AssessForm} />
+    <Route path="/assessment-form/:ehrId/:compId/:adhaarId" component={AssessForm} />
 
     <Route path="/getpatient" component={GetOne} />
 
