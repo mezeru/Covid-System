@@ -19,7 +19,6 @@
     const resp = await FHIR.get("/Patient");
     if(resp.data.total > 0){
       patients = resp.data.entry.map(e => e.resource)
-      console.log(patients);
     }
 
     const options = {
@@ -39,7 +38,6 @@
   const handleFilter = (value) => {
     if (value) {
       patients = fuseObj.search(value).map((x) => x.item);
-      console.log(patients);
     } else {
       patients = fuseObj._docs;
     }

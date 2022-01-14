@@ -7,16 +7,16 @@ import { FHIR } from "../links";
   let data;
   let navigo = useNavigate();
   let display = 0;
+  let namePatient;
 
   const handleSubmit = async () => {
-    console.log(number);
     try {
-      const resp = await FHIR.get(`search?AdhaarNo=${number}`);
+      const resp = await FHIR.get(`/Patient?identifier=${number}`);
 
       if (resp.status == 200) {
         display = 1;
-        data = resp.data;
-        console.log(data);
+        data = resp.data.entry[0].resource;
+        namePatient = data.name[0].given + " " + `${data.name[0].family !== undefined ? data.name[0].family : " "}`
       }
     } catch (e) {
       if (e.response.status == 404) {
@@ -90,7 +90,7 @@ import { FHIR } from "../links";
         <p
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
         >
-          {data.Name}
+          {namePatient}
         </p>
       </div>
       <div>
@@ -103,7 +103,7 @@ import { FHIR } from "../links";
         <p
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
         >
-          {data.AdhaarNo}
+          {data.identifier[0].value}
         </p>
       </div>
     </div>
@@ -117,9 +117,9 @@ import { FHIR } from "../links";
           Gender
         </label>
         <p
-          class="appearance-none block w-full md:mb-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          class="appearance-none block w-full md:mb-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 capitalize"
         >
-          {data.Gender}
+          {data.gender}
         </p>
       </div>
       <div>
@@ -132,7 +132,7 @@ import { FHIR } from "../links";
         <p
           class="appearance-none block w-full md:mb-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
         >
-          {data.PlaceofLiving}
+          {data.address[0].line}
         </p>
       </div>
     </div>
@@ -142,7 +142,7 @@ import { FHIR } from "../links";
         on:submit
         class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mt-5"
         on:click={() => {
-          navigo(`../patient/${data.AdhaarNo}/${data.ehrId}/${data.Name}`);
+          navigo(`../patient/${data.identifier[0].value}/${data.id}/${namePatient}`);
         }}
       >
         Confirm

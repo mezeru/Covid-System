@@ -50,9 +50,7 @@
   export let id;
   export let name;
 
-  console.log(id);
 
-  console.log(ehrId);
 
   let table = new Set([
     "Time",

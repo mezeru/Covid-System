@@ -25,7 +25,6 @@ import { encounterResource } from "./resouces/fhirEncounter";
         params: { format: "FLAT" },
       });
       const data = r.data?.composition;
-      console.log({ data });
       if (data) {
         form.import(data);
       }
@@ -44,7 +43,7 @@ import { encounterResource } from "./resouces/fhirEncounter";
           if(compId === "None"){
             encounterResource(adhaarId,ehrId,0)
           }
-          console.log(navigo(-1));
+          navigo(-1);
         }
       })
       .catch((err) => {
