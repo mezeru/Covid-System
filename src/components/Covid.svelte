@@ -19,6 +19,7 @@ import { encounterResource } from "./resouces/fhirEncounter";
   let navigo = useNavigate();
 
   onMount(async () => {
+
     if (compId != "None") {
       const r = await ehrscape.get(`/composition/${compId}`, {
         params: { format: "FLAT" },
@@ -34,7 +35,6 @@ import { encounterResource } from "./resouces/fhirEncounter";
   const templateId = "Opd_temp.v1";
   const handleSubmit = (e) => {
     loading = true;
-    console.log(e.detail);
     ehrscape
       .post("/composition", e.detail, {
         params: { format: "FLAT", templateId, ehrId },

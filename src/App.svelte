@@ -27,7 +27,7 @@
 
     <Route path="/patient/:id/:ehrId/:name" component={Patient} />
 
-    <Route path="/postdata/:ehrId/:compId" component={CompoForm} />
+    <Route path="/postdata/:ehrId/:compId/:adhaarId" component={CompoForm} />
 
     <Route path="/assessment-form/:ehrId/:compId/:adhaarId" component={AssessForm} />
 

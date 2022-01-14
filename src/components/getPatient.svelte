@@ -50,6 +50,8 @@
   export let id;
   export let name;
 
+  console.log(id);
+
   console.log(ehrId);
 
   let table = new Set([
@@ -73,6 +75,7 @@
   };
 
   onMount(async () => {
+
     let list;
     temp = await Vitals(ehrId);
     time = temp.rows?.map((x) => x[0].value);
@@ -206,7 +209,7 @@
         <sl-button
           type="primary"
           on:click|preventDefault={() => {
-            navigate(`/postdata/${ehrId}/None`);
+            navigate(`/postdata/${ehrId}/None/${id}`);
           }}
         >
           <sl-icon name="plus-square-fill" slot="prefix" />Add Clinical Data
@@ -398,7 +401,7 @@
                         class="px-10 py-2 m-5 text-white font-bold border rounded text-center {clinical !=
                         null
                           ? 'bg-yellow-500'
-                          : 'bg-green-500'}">{comp[2].value}</span
+                          : 'bg-green-500'}">{comp[2]?.value}</span
                       >
                     </p>
                   </div>

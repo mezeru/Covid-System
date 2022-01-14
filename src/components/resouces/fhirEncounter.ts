@@ -1,4 +1,4 @@
-import { FHIR } from "src/links";
+import { FHIR } from "../../links";
 
 
 
@@ -19,22 +19,18 @@ export const encounterResource = async (AdhaarNo, fhirPatientId, classNo) => {
 
     const resource = {
         resourceType: "Encounter",
+        id:  String(fhirPatientId),
         identifier : [{value: AdhaarNo} ],
         status: "finished",
         class: classArr[classNo],
         subject: {
             reference: `Patient/${fhirPatientId}`
-        },
-        location: {
-            location: {
-                reference: "Location/1"
-            }
         }
     }
     console.log({resource});
    
     try{
-        const encounterResp = await FHIR.put(`/Encounter`,resource,
+        const encounterResp = await FHIR.post(`/Encounter`,resource,
         {
           headers: {
             Accept: "application/json",
