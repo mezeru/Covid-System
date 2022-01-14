@@ -24,13 +24,19 @@
       
       if(fhirResp.status === 201){
         try{
-          const respEHR = await openehr.put("/ehr/id",EHR(patient.AdhaarNo),
+          const respEHR = await openehr.put(`/ehr/${fhirResp.data.id}`,EHR(patient.AdhaarNo),
         {
           headers: {
             Accept: "application/json",
           },
         }
       );
+
+        
+          navigo(-1);
+          console.log("here");
+        
+
         }
         catch(e){
           console.log({e});
@@ -38,7 +44,7 @@
       }
     }
     catch(e){
-      
+      console.log({e})
     }
   };
 </script>

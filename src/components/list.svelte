@@ -17,7 +17,10 @@
   
   onMount(async () => {
     const resp = await FHIR.get("/Patient");
-    patients = resp.data;
+    if(resp.data.total){
+      patients = resp.data.entry.map(e => e.resource)
+      console.log(patients);
+    }
 
     const options = {
       includeScore: true,
@@ -52,12 +55,10 @@
     if (confirmed){
       loading = true;
       patients = [];
-    const resp = await fhir.delete(`/delete?AdhaarNo=${id}`);
-    const r = await fhir.get("all");
-    patients = r.data;
+    const resp = await FHIR.delete(`/Patient/${id}`);
+    const r = await FHIR.get("/Patient");
+    patients = r.data.entry.map(e => e.resource);
     }
-    
-    
     loading = false;
   };
 </script>
@@ -101,12 +102,12 @@
           "
           >
             <p class="text-center">
-              {patient.Name}
+              {`${patient.name[0].given[0]}  ${patient.name[0].family !== undefined ? patient.name[0].family : " "}`}
             </p>
           </div>
           <div class="flex justify-center items-center">
             <p class="text-gray-300 font-bold text-xl">
-              {patient.Gender}
+              {patient.gender.toUpperCase()}
             </p>
           </div>
 
@@ -114,27 +115,27 @@
             class="text-gray-300 text-base flex flex-col items-center justify-center"
           >
             <span class="font-bold">Aadhaar Number</span><span
-              >{patient.AdhaarNo}</span
+              >{patient.identifier[0].value}</span
             >
           </p>
           <p
             class="text-gray-300 text-base flex flex-col items-center justify-center"
           >
             <span class="font-bold">Phone number</span>
-            <span>{patient.PhoneNo}</span>
+            <span>{patient.telecom[0].value}</span>
           </p>
 
           <div class="flex justify-end items-center gap-3">
             <sl-button
               type="success"
               on:click|preventDefault={() =>
-                handleClick(patient.AdhaarNo, patient.ehrId, patient.Name)}
+                handleClick(patient.identifier[0].value, patient.id, patient.name[0].given[0] + " " +  patient.name[0].family !== undefined ? patient.name[0].family : " ")}
             >
               <sl-icon name="hdd-stack-fill" slot="suffix" />View Details
             </sl-button>
             <sl-button
               type="danger"
-              on:click|preventDefault={() => handleDelete(patient.AdhaarNo)}
+              on:click|preventDefault={() => handleDelete(patient.id)}
             >
               <sl-icon name="trash" slot="suffix" />
           
