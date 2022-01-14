@@ -1,7 +1,7 @@
 <script>
   import { FHIR, openehr } from "../links";
   import { useNavigate } from "svelte-navigator";
-  import {convertResource} from "./resouces/fhirResource";
+  import {convertResource} from "./resouces/fhirPatient";
   import {EHR} from "./resouces/openEHR";
 
   let ehrId;
