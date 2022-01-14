@@ -4,6 +4,7 @@
   import { useNavigate } from "svelte-navigator";
   import { ehrscape } from "../links";
   import { bind } from "svelte/internal";
+import { encounterResource } from "./resouces/fhirEncounter";
 
   export let ehrId;
   export let compId = null;
@@ -39,6 +40,9 @@
       })
       .then((response) => {
         if (response.status == 200) {
+          if(compId === "None"){
+            // encounterResource(,ehrId,0)
+          }
           console.log(navigo(-1));
         }
       })

@@ -1,7 +1,8 @@
+import { FHIR } from "src/links";
 
 
 
-export const encounterResource = (AdhaarNo, fhirPatientId, classNo) => {
+export const encounterResource = async (AdhaarNo, fhirPatientId, classNo) => {
 
     const classArr = [
         {
@@ -31,5 +32,18 @@ export const encounterResource = (AdhaarNo, fhirPatientId, classNo) => {
         }
     }
     console.log({resource});
-    return resource;
+   
+    try{
+        const encounterResp = await FHIR.put(`/Encounter`,resource,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+    }
+    catch(e){
+        console.log({e});
+    }
+    
 }
