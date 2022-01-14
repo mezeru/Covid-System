@@ -35,8 +35,11 @@
             },
           }
         );
-        const resp = await openehr.get("/definition/template/adl1.4");
+        if(r.status === 204){
+          const resp = await openehr.get("/definition/template/adl1.4");
         templates = resp.data.reverse;
+        }
+        
       } catch (e) {
         if (e.response.status == 409) {
           alert("Template Already Posted");

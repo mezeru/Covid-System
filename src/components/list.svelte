@@ -45,7 +45,8 @@
     }
   };
 
-  const handleClick = (Aadhaar, ehrId, name) => {
+  const handleClick = (Aadhaar, ehrId, name,family) => {
+    name = name + " " + family
     navigate(`/patient/${Aadhaar}/${ehrId}/${name}`);
   };
 
@@ -129,7 +130,7 @@
             <sl-button
               type="success"
               on:click|preventDefault={() =>
-                handleClick(patient.identifier[0].value, patient.id, patient.name[0].given[0] + " " +  patient.name[0].family !== undefined ? patient.name[0].family : " ")}
+                handleClick(patient.identifier[0].value, patient.id, patient.name[0].given[0],patient.name[0].family !== undefined ? patient.name[0].family : " ")}
             >
               <sl-icon name="hdd-stack-fill" slot="suffix" />View Details
             </sl-button>
