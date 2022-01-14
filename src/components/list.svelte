@@ -17,7 +17,7 @@
   
   onMount(async () => {
     const resp = await FHIR.get("/Patient");
-    if(resp.data.total){
+    if(resp.data.total > 0){
       patients = resp.data.entry.map(e => e.resource)
       console.log(patients);
     }

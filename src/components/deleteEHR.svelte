@@ -5,7 +5,7 @@
   const handleSubmit = async () => {
     console.log(number);
     try {
-      const resp = await FHIR.delete(`/delete?AdhaarNo=${number}`);
+      const resp = await FHIR.delete(`/Patient?identifier=${number}`);
 
       if (resp.status == 200) {
         alert("Patient Data Deleted");
