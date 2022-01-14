@@ -3,9 +3,11 @@
   import { fade } from "svelte/transition";
   import { useNavigate } from "svelte-navigator";
   import { ehrscape } from "../links";
+import { encounterResource } from "./resouces/fhirEncounter";
 
   export let ehrId;
-  export let compId = null;
+  export let compId;
+  export let adhaarId;
   let form;
   let loading = false;
   let navigation;
@@ -39,7 +41,10 @@
       })
       .then((response) => {
         if (response.status == 200) {
-          console.log(navigo(-1));
+          if(compId === "None"){
+            encounterResource(adhaarId,ehrId,1)
+          }
+          navigo(-1);
         }
       })
       .catch((err) => {
