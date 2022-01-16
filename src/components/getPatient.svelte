@@ -188,6 +188,11 @@ import { getEncounters } from "./resouces/fhirEncounter";
   };
 </script>
 
+{#if loading}
+      <div class="flex items-center justify-center" style="height: 80vh">
+        <img src={loading2} width="250px" alt="Loading for Data" />
+      </div>
+{:else}
 <div
   in:fly={{ y: 200, duration: 500 }}
   class="m-5 bg-white rounded-lg shadow-lg"
@@ -242,11 +247,8 @@ import { getEncounters } from "./resouces/fhirEncounter";
       duration: 2500,
     }}
   >
-    {#if loading}
-      <div class="flex items-center justify-center">
-        <img src={loading2} width="250px" alt="Loading for Data" />
-      </div>
-    {:else if time.length > 0}
+    
+    {#if time.length > 0}
       <sl-tab-group bind:this={navigation}>
         <sl-tab slot="nav" panel="vital">Vital Signs</sl-tab>
         <sl-tab slot="nav" panel="clinical">Clinical Data</sl-tab>
@@ -666,3 +668,4 @@ import { getEncounters } from "./resouces/fhirEncounter";
   </div>
   
 </div>
+{/if}
