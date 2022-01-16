@@ -48,9 +48,9 @@ import { getEncounters } from "./resouces/fhirEncounter";
           compositions: null
         }
 
-  export let ehrId;
-  export let id;
-  export let name;
+   export let ehrId;
+   let id;
+   let name;
 
 
 
@@ -76,6 +76,11 @@ import { getEncounters } from "./resouces/fhirEncounter";
   };
 
   onMount(async () => {
+
+    let resp = await FHIR.get(`/Patient/${ehrId}`)
+    const fhirPatient = resp.data
+    name = `${fhirPatient.name[0].given[0]}  ${fhirPatient.name[0].family !== undefined ? fhirPatient.name[0].family : " "}`
+    id = fhirPatient.identifier[0].value
 
     let list;
     temp = await Vitals(ehrId);
@@ -386,6 +391,7 @@ import { getEncounters } from "./resouces/fhirEncounter";
           <div class="flex flex-col gap-3 p-5">
             <h3 class="font-bold text-3xl">Travel History</h3>
             <div class="flex flex-col p-5">
+              
               {#each travel as comp}
                 {#if comp[1]}
                   <div
@@ -411,6 +417,7 @@ import { getEncounters } from "./resouces/fhirEncounter";
                     </p>
                   </div>
                 {/if}
+                
               {/each}
             </div>
           </div>

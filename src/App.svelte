@@ -25,7 +25,7 @@
 
     <Route path="/delete" component={Delete} />
 
-    <Route path="/patient/:id/:ehrId/:name" component={Patient} />
+    <Route path="/patient/:ehrId/" component={Patient} />
 
     <Route path="/postdata/:ehrId/:compId/:adhaarId" component={CompoForm} />
 

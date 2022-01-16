@@ -142,7 +142,7 @@ import { FHIR } from "../links";
         on:submit
         class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mt-5"
         on:click={() => {
-          navigo(`../patient/${data.identifier[0].value}/${data.id}/${namePatient}`);
+          navigo(`../patient/${data.id}`);
         }}
       >
         Confirm
