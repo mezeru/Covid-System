@@ -14,6 +14,7 @@
   import LineChart from "./LineChart.svelte";
   import loading2 from "../../assets/loading2.svg";
   import { FHIR, openehr } from "../links";
+import { getEncounters } from "./resouces/fhirEncounter";
 
   const navigate = useNavigate();
 
@@ -33,6 +34,7 @@
   let assess = [];
   let diag = [];
   let time = [];
+  let encounters= []
 
   let loading = true;
   let navigation;
@@ -43,7 +45,7 @@
           lab: "assessment",
           assessment: "conclusion",
           conclusion: "compositions",
-          Compositions: null
+          compositions: null
         }
 
   export let ehrId;
@@ -64,6 +66,7 @@
     return temp.rows?.map((x) => x[5]?.numerator);
   };
 
+
   const makeTem = (temp) => {
     return temp.rows.map((x) => x[2]?.magnitude);
   };
@@ -76,10 +79,13 @@
 
     let list;
     temp = await Vitals(ehrId);
-    time = temp.rows?.map((x) => x[0].value);
+    time = temp.rows?.map((x) => x[0]?.value).filter(e => e);
 
     list = await compositionsList(ehrId);
     listComp = list.rows;
+
+    list = await getEncounters(id);
+    encounters = list
 
     list = await Lab(ehrId);
     listLabs = list.rows;
@@ -235,7 +241,7 @@
       <div class="flex items-center justify-center">
         <img src={loading2} width="250px" alt="Loading for Data" />
       </div>
-    {:else if temp?.rows.length >= 1}
+    {:else if time.length > 0}
       <sl-tab-group bind:this={navigation}>
         <sl-tab slot="nav" panel="vital">Vital Signs</sl-tab>
         <sl-tab slot="nav" panel="clinical">Clinical Data</sl-tab>
@@ -243,7 +249,8 @@
         <sl-tab slot="nav" panel="lab">Laboratory Tests</sl-tab>
         <sl-tab slot="nav" panel="assessment">Assessments</sl-tab>
         <sl-tab slot="nav" panel="conclusion">Conclusions</sl-tab>
-        <sl-tab slot="nav" panel="Compositions">Compositions Posted</sl-tab>
+        <sl-tab slot="nav" panel="compositions">Compositions Posted</sl-tab>
+        <sl-tab slot="nav" panel="encounter">Encounters</sl-tab>
 
         <sl-tab-panel name="clinical">
           <h3 class="text-3xl font-bold">Clinical Background</h3>
@@ -540,7 +547,8 @@
           </div>
         </sl-tab-panel>
 
-        <sl-tab-panel name="Compositions">
+      
+        <sl-tab-panel name="compositions">
           <div class="flex flex-col gap-3 p-5">
             {#each listComp as comp}
               {#if comp[1]}
@@ -566,7 +574,7 @@
                       to={`/${formLink[comp[2]]}/${ehrId}/${comp[1].substring(
                         0,
                         36
-                      )}`}
+                      )}/${id}`}
                     >
                       Edit Composition
                     </Link>
@@ -577,6 +585,39 @@
             {/each}
           </div>
         </sl-tab-panel>
+
+        <sl-tab-panel name="encounter">
+          <div class="flex flex-col gap-3 p-5">
+            {#each encounters as encounter}
+              {#if encounters.length > 0}
+                <div
+                  class="grid grid-cols-3 p-5 rounded-lg shadow-inner bg-gray-900 text-gray-200 items-center"
+                >
+                  <div class="text-center text-lg font-semibold">
+                    <sl-format-date
+                      month="long"
+                      day="numeric"
+                      hour="numeric"
+                      minute="numeric"
+                      hour-format="12"
+                      date={encounter.meta.lastUpdated}
+                    />
+                  </div>
+                  <div class="text-center text-lg font-semibold">
+                    <p>{encounter.class.display}</p>
+                  </div>
+
+                  <div class="text-center text-lg font-semibold capitalize">
+                    <p>{encounter.status}</p>
+                  </div>
+                </div>
+                <br />
+              {/if}
+            {/each}
+          </div>
+        </sl-tab-panel>
+
+        
       </sl-tab-group>
       <div class="w-full flex justify-between">
 

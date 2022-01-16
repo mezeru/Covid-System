@@ -30,7 +30,7 @@ export const encounterResource = async (AdhaarNo, fhirPatientId, classNo) => {
     console.log({resource});
    
     try{
-        const encounterResp = await FHIR.post(`/Encounter`,resource,
+        await FHIR.post(`/Encounter`,resource,
         {
           headers: {
             Accept: "application/json",
@@ -42,4 +42,13 @@ export const encounterResource = async (AdhaarNo, fhirPatientId, classNo) => {
         console.log({e});
     }
     
+}
+
+export const getEncounters = async(id) =>{
+    let encounters = []
+    const resp = await FHIR.get(`/Encounter?identifier=${id}`);
+    if(resp.data.total !== 0){
+    encounters = resp.data.entry.map(e => e.resource).reverse();
+    }
+    return [...encounters]
 }

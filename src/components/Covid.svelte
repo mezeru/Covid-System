@@ -33,24 +33,48 @@ import { encounterResource } from "./resouces/fhirEncounter";
 
   const templateId = "Opd_temp.v1";
   const handleSubmit = (e) => {
+
     loading = true;
-    ehrscape
-      .post("/composition", e.detail, {
-        params: { format: "FLAT", templateId, ehrId },
-      })
-      .then((response) => {
-        if (response.status == 200) {
-          if(compId === "None"){
-            encounterResource(adhaarId,ehrId,0)
-          }
-          navigo(-1);
-        }
-      })
-      .catch((err) => {
-        loading = false;
-        alert(err);
+
+    if(compId != "None"){
+
+      ehrscape
+          .put(`/composition/${compId}`, e.detail, {
+            params: { format: "FLAT", templateId, ehrId },
+          })
+          .then((response) => {
+            if (response.status == 200) {
+             
+              navigo(-1);
+            }
+          })
+          .catch((err) => {
+            loading = false;
+            alert(err);
+            
+          });
+
+    }
+    else{
         
-      });
+        ehrscape
+          .post("/composition", e.detail, {
+            params: { format: "FLAT", templateId, ehrId },
+          })
+          .then((response) => {
+            if (response.status == 200) {
+              if(compId === "None"){
+                encounterResource(adhaarId,ehrId,0)
+              }
+              navigo(-1);
+            }
+          })
+          .catch((err) => {
+            loading = false;
+            alert(err);
+            
+          });
+    }
     
   };
 </script>
