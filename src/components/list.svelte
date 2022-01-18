@@ -7,7 +7,7 @@
   import { onMount } from "svelte";
   import { each } from "svelte/internal";
   import { fade, fly } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
+  import { expoIn, expoOut } from "svelte/easing";
   import { FHIR } from "../links";
   import loading1 from "../../assets/loading1.svg";
 
@@ -16,10 +16,20 @@
   let fuseObj;
   
   onMount(async () => {
-    const resp = await FHIR.get("/Patient");
+    try{
+      const resp = await FHIR.get("/Patient");
     if(resp.data.total > 0){
       patients = resp.data.entry.map(e => e.resource)
+      patients.reverse();
+      loading = false;
     }
+    }
+    catch(e){
+      if(e.config.data === undefined){
+        alert("Server is Down")
+      };
+    }
+    
 
     const options = {
       includeScore: true,
@@ -31,7 +41,7 @@
     };
 
     fuseObj = new Fuse(patients, options);
-    loading = false;
+    
   });
 
 
@@ -56,6 +66,7 @@
     const resp = await FHIR.delete(`/Patient/${id}`);
     const r = await FHIR.get("/Patient");
     patients = r.data.entry.map(e => e.resource);
+    patients.reverse();
     }
     loading = false;
   };
@@ -89,9 +100,9 @@
       <img width="300px" src={loading1} alt="loading" />
     </div>
   {:else if patients.length > 0}
-    {#each patients as patient}
+    {#each patients as patient,i}
       <div
-        in:fly={{ y: 1000, duration: 500, easing: quintOut }}
+        in:fly={{ y: 1000, duration: (i+1)*300, easing: expoOut }}
         class="m-5 rounded-lg border-2 border-gray-200 px-1 bg-gray-800 shadow-xl"
       >
         <div class="px-6 py-4 grid grid-cols-5">

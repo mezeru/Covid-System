@@ -2,6 +2,7 @@
   import { openehr } from "../links";
 
   import { onMount } from "svelte";
+import { fly } from "svelte/transition";
   let templates = [];
   let files;
 
@@ -37,7 +38,7 @@
         );
         if(r.status === 204){
           const resp = await openehr.get("/definition/template/adl1.4");
-        templates = resp.data.reverse;
+        templates = resp.data.reverse();
         }
         
       } catch (e) {
@@ -61,7 +62,7 @@
         Templates Posted
       </h3>
     </div>
-    <div class="flex flex-col p-5 m-2">
+    <div class="flex flex-col p-5 m-2" in:fly={{ y: 200, duration: 500 }}>
       {#each templates as temp, i}
         <div
           class="grid grid-cols-5 text-center items-center rounded-lg shadow-lg border p-5 m-3 "
@@ -87,7 +88,7 @@
   {:else}
     <div>No Templates Posted</div>
   {/if}
-  <div class="m-2 flex flex-row items-center justify-center">
+  <div class="m-2 flex flex-row items-center justify-center" in:fly={{ y: 200, duration: 1000 }}>
     <sl-button type="primary" class="mx-5" on:click={handleClick}
       ><sl-icon name="file-earmark-plus-fill" slot="prefix" />Add</sl-button
     >
