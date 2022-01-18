@@ -33,7 +33,7 @@
       );
 
         
-          navigo(`/patient/${patient.AdhaarNo}/${fhirResp.data.id}/${patient.Name}`);;
+          navigo(`/patient/${fhirResp.data.id}`);;
           console.log("here");
         
 

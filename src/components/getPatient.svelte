@@ -45,7 +45,8 @@ import { getEncounters } from "./resouces/fhirEncounter";
           lab: "assessment",
           assessment: "conclusion",
           conclusion: "compositions",
-          compositions: null
+          compositions: "encounter",
+          encounter: null
         }
 
    export let ehrId;
@@ -106,6 +107,8 @@ import { getEncounters } from "./resouces/fhirEncounter";
 
     list = await Diagnosis(ehrId);
     diag = list.rows;
+
+    console.log({diag});
 
     loading = false;
 
