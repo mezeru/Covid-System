@@ -80,10 +80,10 @@ import { encounterResource } from "./resouces/fhirEncounter";
       <mb-option value="at0.20" label="Household members with travel exposure"></mb-option>
       </mb-select>
       <div class="flex flex-col gap-3 p-5 shadow-lg rounded-lg border m-1">
-      <mb-select path="assessment.v0/covid-19_infection_risk_assessment/assessment_method" label="Assessment method">
-        <mb-option label="RT-PCR">RT-PCR</mb-option>
-        <mb-option label="Rapid Antigen">Rapid Antigen</mb-option>
-      </mb-select>
+        <mb-text-select path="assessment.v0/covid-19_infection_risk_assessment/assessment_method" label="Assessment method">
+          <mb-option value="RT-PCR" label="RT-PCR"></mb-option>
+      <mb-option value="Antigen"  label="Antigen"></mb-option>
+        </mb-text-select>
       
       <mb-select path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/presence" label="Presence" terminology="local">
         <mb-option value="at0018" label="Present"></mb-option>
@@ -102,7 +102,7 @@ import { encounterResource } from "./resouces/fhirEncounter";
         <mb-option value="at0021" label="Relative risk"></mb-option>
       <mb-option value="at0022" label="Absolute risk"></mb-option>
       </mb-select>
-      <mb-duration year month hour path="assessment.v0/covid-19_infection_risk_assessment/time_period" label="Time period"></mb-duration>
+      <mb-duration year month hour path="assessment.v0/covid-19_infection_risk_assessment/time_period" label="The time period during which the predicted health risk is relevant"></mb-duration>
       <mb-date time path="assessment.v0/covid-19_infection_risk_assessment/last_updated" label="Last updated"></mb-date>
       
 
