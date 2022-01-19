@@ -19,7 +19,7 @@ import { getEncounters } from "./resouces/fhirEncounter";
   const navigate = useNavigate();
 
   const formLink = {
-    "assessment.form": "assessment-form",
+    "assessment.v0": "assessment-form",
     "Opd_temp.v1": "postdata",
   };
 
@@ -43,8 +43,8 @@ import { getEncounters } from "./resouces/fhirEncounter";
           clinical: "travel",
           travel: "lab",
           lab: "assessment",
-          assessment: "conclusion",
-          conclusion: "compositions",
+          assessment: "compositions",
+          
           compositions: "encounter",
           encounter: null
         }
@@ -258,7 +258,6 @@ import { getEncounters } from "./resouces/fhirEncounter";
         <sl-tab slot="nav" panel="travel">Travel History</sl-tab>
         <sl-tab slot="nav" panel="lab">Laboratory Tests</sl-tab>
         <sl-tab slot="nav" panel="assessment">Assessments</sl-tab>
-        <sl-tab slot="nav" panel="conclusion">Conclusions</sl-tab>
         <sl-tab slot="nav" panel="compositions">Compositions Posted</sl-tab>
         <sl-tab slot="nav" panel="encounter">Encounters</sl-tab>
 
@@ -511,54 +510,6 @@ import { getEncounters } from "./resouces/fhirEncounter";
             {/each}
           </div>
         </sl-tab-panel>
-
-        <sl-tab-panel name="conclusion">
-          <div class="flex flex-col gap-3 p-5">
-            {#each diag as test}
-              {#if test[1]}
-                <div
-                  class="p-5 rounded-lg flex flex-col shadow-inner bg-gray-800"
-                >
-                  <div class="grid grid-cols-3 justify-evenly">
-                    <p class="flex flex-col text-center mb-5 text-white">
-                      <span class="text-3xl font-bold m-2">
-                        {test[1]?.value}
-                      </span>
-                      <span class="text-base m-2"
-                        >{@html handleName(test[4], "Time")}</span
-                      >
-                    </p>
-                    <div class="flex items-center justify-center">
-                      <p
-                        class="{test[3]?.value == 'Severe'
-                          ? 'bg-red-500'
-                          : test[3]?.value == 'Mild'
-                          ? 'bg-green-500'
-                          : 'bg-yellow-500'} px-4 py-2 text-3xl rounded-lg text-white"
-                      >
-                        {test[3]?.value}
-                      </p>
-                    </div>
-                    <div
-                      class="flex flex-col mb-5 text-white items-center justify-center"
-                    >
-                      <p class="text-center text-2xl">
-                        {test[2]}
-                      </p>
-                    </div>
-                  </div>
-                  <p
-                    class=" bg-gray-100 text-gray-700 border text-xl border-gray-200 rounded px-4 py-2"
-                  >
-                    {test[6]?.value}
-                  </p>
-                </div>
-                <br />
-              {/if}
-            {/each}
-          </div>
-        </sl-tab-panel>
-
       
         <sl-tab-panel name="compositions">
           <div class="flex flex-col gap-3 p-5">

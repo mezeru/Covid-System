@@ -10,11 +10,6 @@ import { encounterResource } from "./resouces/fhirEncounter";
   export let adhaarId;
   let form;
   let loading = false;
-  let navigation;
-  let tabs = {
-    assess: "Conclu",
-    Conclu: null
-  }
 
   let navigo = useNavigate();
 
@@ -31,7 +26,7 @@ import { encounterResource } from "./resouces/fhirEncounter";
     }
   });
 
-  const templateId = "assessment.form";
+  const templateId = "assessment.v0";
   const handleSubmit = (e) => {
     loading = true;
     console.log(e.detail);
@@ -62,171 +57,71 @@ import { encounterResource } from "./resouces/fhirEncounter";
   ref="formRef"
   on:mb-submit={handleSubmit}
 >
-  <sl-tab-group bind:this={navigation}>
+  <sl-tab-group>
     <sl-tab slot="nav" panel="assess">Assessment</sl-tab>
-    <sl-tab slot="nav" panel="Conclu">Conclusions</sl-tab>
 
     <sl-tab-panel name="assess">
-      <mb-context path="assessment.form/context/start_time" />
-      <mb-context path="assessment.form/context/setting" />
-      <mb-context path="assessment.form/category" />
+      <mb-context path="assessment.v0/context/start_time"></mb-context>
+      <mb-context path="assessment.v0/context/setting"></mb-context>
       <div class="flex flex-col gap-3 p-5 m-5">
-        <mb-select
-          path="assessment.form/assessment/covid-19_infection_risk_assessment/health_risk"
-          label="Health risk"
-        >
-          <mb-option value="at0.1" label="COVID-19 Risk assessment" />
-        </mb-select>
-        <mb-select
-          path="assessment.form/assessment/covid-19_infection_risk_assessment/risk_factors:0/risk_factor"
-          label="Risk factor"
-        >
-          <mb-option
-            value="at0.9"
-            label="Contact with confirmed Covid-19 case"
-          />
-          <mb-option
-            value="at0.14"
-            label="Potential contact exposure based on location"
-          />
-          <mb-option
-            value="at0.10"
-            label="Contact with suspected case/ pneumonia case"
-          />
-          <mb-option
-            value="at0.13"
-            label="Contact with severe, unexplained respiratory disease"
-          />
+        
+      <mb-select path="assessment.v0/covid-19_infection_risk_assessment/health_risk" label="Health risk" terminology="local">
+        <mb-option value="at0.1" label="COVID-19 Risk assessment"></mb-option>
+      </mb-select>
+      <mb-select path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/risk_factor" label="Risk factor" terminology="local">
+        <mb-option value="at0.9" label="Contact with confirmed Covid-19 case"></mb-option>
+      <mb-option value="at0.14" label="Potential contact exposure based on location"></mb-option>
+      <mb-option value="at0.10" label="Contact with suspected case/ pneumonia case"></mb-option>
+      <mb-option value="at0.13" label="Contact with severe, unexplained respiratory disease"></mb-option>
+      <mb-option value="at0.11" label="Contact with birds in China"></mb-option>
+      <mb-option value="at0.12" label="Contact with confirmed human case of Avian flu in China"></mb-option>
+      <mb-option value="at0.18" label="Needs admission for respiratory disease"></mb-option>
+      <mb-option value="at0.19" label="Other household members are ill"></mb-option>
+      <mb-option value="at0.20" label="Household members with travel exposure"></mb-option>
+      </mb-select>
+      <div class="flex flex-col gap-3 p-5 shadow-lg rounded-lg border m-1">
+      <mb-select path="assessment.v0/covid-19_infection_risk_assessment/assessment_method" label="Assessment method">
+        <mb-option label="RT-PCR">RT-PCR</mb-option>
+        <mb-option label="Rapid Antigen">Rapid Antigen</mb-option>
+      </mb-select>
+      
+      <mb-select path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/presence" label="Presence" terminology="local">
+        <mb-option value="at0018" label="Present"></mb-option>
+      <mb-option value="at0019" label="Absent"></mb-option>
+      <mb-option value="at0.15" label="Unknown"></mb-option>
+      </mb-select>
+    </div>
+      <mb-input path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/description" label="Description"></mb-input>
+      <mb-date time path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/date_identified" label="Date identified"></mb-date>
+      <mb-checkbox path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/mitigated" label="Mitigated"></mb-checkbox>
+      <mb-select path="assessment.v0/covid-19_infection_risk_assessment/risk_assessment" label="Risk assessment" terminology="local">
+        <mb-option value="at0.16" label="Low risk"></mb-option>
+      <mb-option value="at0.17" label="High risk"></mb-option>
+      </mb-select>
+      <mb-select path="assessment.v0/covid-19_infection_risk_assessment/assessment_type" label="Assessment type" terminology="local">
+        <mb-option value="at0021" label="Relative risk"></mb-option>
+      <mb-option value="at0022" label="Absolute risk"></mb-option>
+      </mb-select>
+      <mb-duration year month hour path="assessment.v0/covid-19_infection_risk_assessment/time_period" label="Time period"></mb-duration>
+      <mb-date time path="assessment.v0/covid-19_infection_risk_assessment/last_updated" label="Last updated"></mb-date>
+      
 
-          <mb-option
-            value="at0.18"
-            label="Needs admission for respiratory disease"
-          />
-
-          <mb-option value="at0.19" label="Other household members are ill" />
-          <mb-option
-            value="at0.20"
-            label="Household members with travel exposure"
-          />
-        </mb-select>
-        <mb-select
-          path="assessment.form/assessment/covid-19_infection_risk_assessment/risk_factors:0/presence"
-          label="Presence"
-        >
-          <mb-option value="at0018" label="Present" />
-          <mb-option value="at0019" label="Absent" />
-          <mb-option value="at0.15" label="Unknown" />
-        </mb-select>
-        <mb-input
-          path="assessment.form/assessment/covid-19_infection_risk_assessment/risk_factors:0/description"
-          label="Description"
-        />
-        <mb-date
-          time
-          path="assessment.form/assessment/covid-19_infection_risk_assessment/risk_factors:0/date_identified"
-          label="Date identified"
-        />
-        <mb-select
-          path="assessment.form/assessment/covid-19_infection_risk_assessment/risk_assessment"
-          label="Risk assessment"
-        >
-          <mb-option value="at0.16" label="Low risk" />
-          <mb-option value="at0.17" label="High risk" />
-        </mb-select>
-        <mb-context
-          path="assessment.form/assessment/covid-19_infection_risk_assessment/language"
-        />
-        <mb-context
-          path="assessment.form/assessment/covid-19_infection_risk_assessment/encoding"
-        />
-        <mb-context
-          path="assessment.form/assessment/covid-19_infection_risk_assessment/subject"
-        />
+      <mb-context path="assessment.v0/covid-19_infection_risk_assessment/language"></mb-context>
+      <mb-context path="assessment.v0/covid-19_infection_risk_assessment/encoding"></mb-context>
+      <mb-context path="assessment.v0/covid-19_infection_risk_assessment/subject"></mb-context>
       </div>
     </sl-tab-panel>
-    <sl-tab-panel name="Conclu">
-      <div class="flex flex-col gap-3 p-5 m-5">
-        <mb-input
-          path="assessment.form/conclusion/problem_diagnosis/problem_diagnosis_name"
-          label="Problem/Diagnosis name"
-        />
-        <mb-input
-          path="assessment.form/conclusion/problem_diagnosis/clinical_description"
-          label="Clinical description"
-        />
-
-        <mb-select
-          path="assessment.form/conclusion/problem_diagnosis/severity"
-          label="Severity"
-        >
-          <mb-option value="at0047" label="Mild" />
-          <mb-option value="at0048" label="Moderate" />
-          <mb-option value="at0049" label="Severe" />
-        </mb-select>
-
-        <mb-date
-          time
-          path="assessment.form/conclusion/problem_diagnosis/date_time_of_resolution"
-          label="Date/time of resolution"
-        />
-        <mb-select
-          path="assessment.form/conclusion/problem_diagnosis/diagnostic_certainty"
-          label="Diagnostic certainty"
-        >
-          <mb-option value="at0074" label="Suspected" />
-          <mb-option value="at0075" label="Probable" />
-          <mb-option value="at0076" label="Confirmed" />
-        </mb-select>
-        <mb-input
-          path="assessment.form/conclusion/problem_diagnosis/comment"
-          label="Comment"
-        />
-
-        <mb-context
-          path="assessment.form/conclusion/problem_diagnosis/language"
-        />
-        <mb-context
-          path="assessment.form/conclusion/problem_diagnosis/encoding"
-        />
-        <mb-context
-          path="assessment.form/conclusion/problem_diagnosis/subject"
-        />
-      </div>
-    </sl-tab-panel>
-    <mb-context path="assessment.form/composer" />
-    <mb-context path="assessment.form/territory" />
-    <mb-context path="assessment.form/language" />
-  </sl-tab-group>
-  <div class="w-full flex justify-between">
-    <sl-button
-        type="neutral"
-        on:click={() => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-          let previous_tab = navigation.activeTab.previousElementSibling?.panel;
-          navigation.show(previous_tab);
-        }}
-      >
-        <sl-icon slot="prefix" name="arrow-left" />
-        Back
-      </sl-button>
     
+      <mb-context path="assessment.v0/category"></mb-context>
+      <mb-context path="assessment.v0/language"></mb-context>
+      <mb-context path="assessment.v0/territory"></mb-context>
+      <mb-context path="assessment.v0/composer"></mb-context>
+    
+  </sl-tab-group>
+  <div class="flex justify-between">    
       <mb-submit>
         <sl-button type="primary" size="large" {loading}>Submit</sl-button>
       </mb-submit>
-
-    <sl-button
-    type="neutral"
-    on:click={() => {
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }, 50);
-      let next_tab = tabs[navigation.activeTab.panel];
-      navigation.show(next_tab);
-    }}
-  >
-    <sl-icon slot="suffix" name="arrow-right" />
-    Next
-  </sl-button>
   </div>
   
 </mb-form>
