@@ -5,8 +5,7 @@
     Lab,
     Clinical,
     Travel,
-    Assessment,
-    Diagnosis,
+    Assessment
   } from "../aql";
   import { useNavigate, Link } from "svelte-navigator";
   import { onMount } from "svelte";
@@ -104,9 +103,8 @@ import { getEncounters } from "./resouces/fhirEncounter";
 
     list = await Assessment(ehrId);
     assess = list.rows;
+    console.log({assess})
 
-    list = await Diagnosis(ehrId);
-    diag = list.rows;
 
     console.log({diag});
 
@@ -204,21 +202,42 @@ import { getEncounters } from "./resouces/fhirEncounter";
     class="grid grid-cols-3 gap-3 p-5 shadow-lg rounded-t-lg border bg-gray-700 justify-between"
   >
     <div class="grid grid-cols-1 justify-center items-center">
-      <p class="text-2xl text-white">{id}</p>
-      <p class="font-bold text-4xl text-white">{name}</p>
+      <p class="font-bold text-5xl text-white">{name}</p>
+      <p class="text-3xl text-white">{id}</p>
+      
     </div>
 
-    <div class="flex justify-center items-center">
+    <div class="flex justify-between items-center">
       {#if !loading}
+        
         <p
           in:fade={{ duration: 1500 }}
-          class="px-10 py-2 text-white font-bold rounded text-center uppercase text-3xl blinkDiv {temp
+          class="px-5 m-2 py-2 text-white font-bold rounded text-center uppercase text-3xl blinkDiv {temp
             ?.rows[0]?.[1]?.value == 'YES'
             ? 'bg-yellow-500'
             : 'bg-green-500'}"
         >
           {temp?.rows[0]?.[1]?.value == "YES" ? "Admitted" : "Not Admitted"}
         </p>
+
+        {#if assess[0] === undefined}
+
+        <p
+          in:fade={{ duration: 1500 }}
+          class="px-5 m-2 py-2 text-white font-bold rounded text-center uppercase text-3xl blinkDiv bg-blue-700 border-blue-700"
+        >
+          Infection Unknown
+        </p>
+
+        {:else}
+        
+        <p
+          in:fade={{ duration: 1500 }}
+          class="px-5 m-2 py-2 text-white font-bold rounded text-center uppercase text-3xl blinkDiv {assess[0][2] == 'Present' ? "bg-red-700 border-red-700" : assess[0][2] == 'Absent' ? "bg-green-700 border-green-700" : "bg-blue-700 border-blue-700"}"
+        >
+        {assess[0][2] == 'Present' ? "Infected" : "Not Infected"}
+        </p>
+        {/if}
       {/if}
     </div>
     <div class="flex justify-end items-center">
@@ -239,6 +258,15 @@ import { getEncounters } from "./resouces/fhirEncounter";
           }}
         >
           <sl-icon name="plus-square-fill" slot="prefix" />Add Assessment
+        </sl-button>
+
+        <sl-button
+          type="primary"
+          on:click|preventDefault={() => {
+            navigate(`/assessment-form/${ehrId}/None/${id}`);
+          }}
+        >
+          <sl-icon name="plus-square-fill" slot="prefix" />Add Vaccination
         </sl-button>
       </div>
     </div>
@@ -479,7 +507,7 @@ import { getEncounters } from "./resouces/fhirEncounter";
                 <div
                   class="rounded-lg shadow-inner bg-gray-900 text-gray-200 p-5"
                 >
-                  <div class="grid grid-cols-3 p-2 items-center">
+                  <div class="grid grid-cols-2 p-2 items-center">
                     <div class="text-center text-xl font-semibold">
                       <div>
                         <sl-format-date
@@ -501,9 +529,10 @@ import { getEncounters } from "./resouces/fhirEncounter";
                     <div class="text-center text-xl font-semibold">
                       <p>{asses[1]}</p>
                     </div>
-                    <div>
-                      <p class="text-center text-lg">{asses[4]}</p>
-                    </div>
+                   
+                  </div>
+                  <div>
+                    <p class="text-center text-lg" style="display: {asses[5] === null ? "none" : "block"} ;"><span class="font-bold">{asses[5]} Result : </span><span class="text-white font-bold py-2 px-4 border m-4 rounded {asses[2] == 'Present' ? "bg-red-700 border-red-700" : asses[2] == 'Absent' ? "bg-green-700 border-green-700" : "bg-blue-700 border-blue-700" }">{asses[2]}</span></p>
                   </div>
                 </div>
               {/if}

@@ -79,27 +79,9 @@ export const compositionsList = async (ehrId :string) =>{
     ev/data[at0001]/items[at0016]/items[at0013.1]/value/value as RiskFactor,
     ev/data[at0001]/items[at0016]/items[at0017.1]/value/value as Presence,
     ev/data[at0001]/items[at0016]/items[at0029]/value/value as date,
-    ev/data[at0001]/items[at0003.1]/value/value as RiskAssess
+    ev/data[at0001]/items[at0020]/value/value,
+    ev/protocol[at0010]/items[at0025]/value/value
     from EHR e CONTAINS COMPOSITION c CONTAINS EVALUATION ev [openEHR-EHR-EVALUATION.health_risk-covid.v0]
-    WHERE e/ehr_id/value='${ehrId}'
-    ORDER by Time DESC
-    `
-    const r = await openehr.post(`/query/aql`, {
-      q: query,
-    });
-    return formatAql(r.data);
-  }
-
-  export const Diagnosis = async (ehrId :string) => {
-    const query = `SELECT
-    c/context/start_time/value as Time,
-    ev/data[at0001]/items[at0002]/value as Problem,
-    ev/data[at0001]/items[at0009]/value/value as Clinc,
-    ev/data[at0001]/items[at0005]/value as Severe,
-    ev/data[at0001]/items[at0030]/value as time_Resol,
-    ev/data[at0001]/items[at0073]/value as DiagCertain,
-    ev/data[at0001]/items[at0069]/value as Comment
-    from EHR e CONTAINS COMPOSITION c CONTAINS EVALUATION ev [openEHR-EHR-EVALUATION.problem_diagnosis.v1]
     WHERE e/ehr_id/value='${ehrId}'
     ORDER by Time DESC
     `

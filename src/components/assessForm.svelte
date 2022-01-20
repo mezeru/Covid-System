@@ -29,8 +29,28 @@ import { encounterResource } from "./resouces/fhirEncounter";
   const templateId = "assessment.v0";
   const handleSubmit = (e) => {
     loading = true;
-    console.log(e.detail);
-    ehrscape
+
+
+    if(compId !== 'None'){
+      ehrscape
+          .put(`/composition/${compId}`, e.detail, {
+            params: { format: "FLAT", templateId, ehrId },
+          })
+          .then((response) => {
+            if (response.status == 200) {
+             
+              navigo(-1);
+            }
+          })
+          .catch((err) => {
+            loading = false;
+            alert(err);
+            
+          });
+    }
+    else{
+
+      ehrscape
       .post("/composition", e.detail, {
         params: { format: "FLAT", templateId, ehrId },
       })
@@ -45,6 +65,10 @@ import { encounterResource } from "./resouces/fhirEncounter";
       .catch((err) => {
         alert(err);
       });
+    
+
+    }
+
     loading = false;
   };
 </script>
@@ -81,8 +105,8 @@ import { encounterResource } from "./resouces/fhirEncounter";
       </mb-select>
       <div class="flex flex-col gap-3 p-5 shadow-lg rounded-lg border m-1">
         <mb-text-select path="assessment.v0/covid-19_infection_risk_assessment/assessment_method" label="Assessment method">
-          <mb-option value="RT-PCR" label="RT-PCR"></mb-option>
-      <mb-option value="Antigen"  label="Antigen"></mb-option>
+          <mb-option value="RT-PCR Test" label="RT-PCR Test"></mb-option>
+      <mb-option value="Antigen Test"  label="Antigen Test"></mb-option>
         </mb-text-select>
       
       <mb-select path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/presence" label="Presence" terminology="local">
@@ -97,10 +121,6 @@ import { encounterResource } from "./resouces/fhirEncounter";
       <mb-select path="assessment.v0/covid-19_infection_risk_assessment/risk_assessment" label="Risk assessment" terminology="local">
         <mb-option value="at0.16" label="Low risk"></mb-option>
       <mb-option value="at0.17" label="High risk"></mb-option>
-      </mb-select>
-      <mb-select path="assessment.v0/covid-19_infection_risk_assessment/assessment_type" label="Assessment type" terminology="local">
-        <mb-option value="at0021" label="Relative risk"></mb-option>
-      <mb-option value="at0022" label="Absolute risk"></mb-option>
       </mb-select>
       <mb-duration year month hour path="assessment.v0/covid-19_infection_risk_assessment/time_period" label="The time period during which the predicted health risk is relevant"></mb-duration>
       <mb-date time path="assessment.v0/covid-19_infection_risk_assessment/last_updated" label="Last updated"></mb-date>
