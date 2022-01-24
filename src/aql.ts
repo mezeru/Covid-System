@@ -108,4 +108,22 @@ export const compositionsList = async (ehrId :string) =>{
     return formatAql(r.data);
   };
 
+
+  export const VaccineList = async (ehrId :string) => {
+    const query = ` SELECT
+    c/context/start_time/value as time,
+    ev/data[at0002]/items[at0003]/value/value,
+    ev/data[at0002]/items[at0007]/value/value,
+    ev/data[at0002]/items[at0005]/value/value
+    FROM EHR e CONTAINS COMPOSITION c CONTAINS EVALUATION ev [openEHR-EHR-EVALUATION.covid_vaccine.v0]
+    WHERE e/ehr_id/value='${ehrId}'
+    ORDER by time DESC
+    `;
+
+    const r = await openehr.post(`/query/aql`, {
+      q: query,
+    });
+    return formatAql(r.data);
+  };
+
   

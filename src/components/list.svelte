@@ -18,10 +18,10 @@
   onMount(async () => {
     try{
       const resp = await FHIR.get("/Patient");
+      loading = false;
     if(resp.data.total > 0){
       patients = resp.data.entry.map(e => e.resource)
       patients.reverse();
-      loading = false;
     }
     }
     catch(e){
@@ -65,10 +65,11 @@
       patients = [];
     const resp = await FHIR.delete(`/Patient/${id}`);
     const r = await FHIR.get("/Patient");
+    loading = false;
     patients = r.data.entry.map(e => e.resource);
     patients.reverse();
     }
-    loading = false;
+    
   };
 </script>
 
@@ -99,7 +100,8 @@
     <div class="flex items-center justify-center">
       <img width="300px" src={loading1} alt="loading" />
     </div>
-  {:else if patients.length > 0}
+  {:else}
+    {#if patients.length > 0}
     {#each patients as patient,i}
       <div
         in:fly={{ y: 1000, duration: (i+1)*300, easing: expoOut }}
@@ -153,7 +155,7 @@
         </div>
       </div>
     {/each}
-  {:else}
+    {:else}
     <div>
       <p
         class="text-6xl subpixel-antialiased text-center p-5 text-red-500 font-bold"
@@ -161,5 +163,7 @@
         No Data
       </p>
     </div>
+    {/if}
   {/if}
 </div>
+

@@ -13,6 +13,7 @@
   import Templates from "./components/Templates.svelte";
   import GetOne from "./components/GetOne.svelte";
   import AssessForm from "./components/assessForm.svelte";
+  import Vaccine from "./components/vaccine.svelte";
 </script>
 
 <Router>
@@ -28,6 +29,8 @@
     <Route path="/patient/:ehrId/" component={Patient} />
 
     <Route path="/postdata/:ehrId/:compId/:adhaarId" component={CompoForm} />
+
+    <Route path="/vaccine/:ehrId/:compId/:adhaarId" component={Vaccine} />
 
     <Route path="/assessment-form/:ehrId/:compId/:adhaarId" component={AssessForm} />
 

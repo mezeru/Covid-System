@@ -5,7 +5,8 @@
     Lab,
     Clinical,
     Travel,
-    Assessment
+    Assessment,
+VaccineList
   } from "../aql";
   import { useNavigate, Link } from "svelte-navigator";
   import { onMount } from "svelte";
@@ -13,13 +14,14 @@
   import LineChart from "./LineChart.svelte";
   import loading2 from "../../assets/loading2.svg";
   import { FHIR, openehr } from "../links";
-import { getEncounters } from "./resouces/fhirEncounter";
+  import { getEncounters } from "./resouces/fhirEncounter";
 
   const navigate = useNavigate();
 
   const formLink = {
     "assessment.v0": "assessment-form",
     "Opd_temp.v1": "postdata",
+    "vaccine.v2":"vaccine"
   };
 
   
@@ -33,7 +35,8 @@ import { getEncounters } from "./resouces/fhirEncounter";
   let assess = [];
   let diag = [];
   let time = [];
-  let encounters= []
+  let encounters = []
+  let vaccinations = []
 
   let loading = true;
   let navigation;
@@ -103,10 +106,13 @@ import { getEncounters } from "./resouces/fhirEncounter";
 
     list = await Assessment(ehrId);
     assess = list.rows;
-    console.log({assess})
+
+    list = await VaccineList(ehrId);
+    vaccinations = list.rows;
+
+    console.log({vaccinations})
 
 
-    console.log({diag});
 
     loading = false;
 
@@ -263,7 +269,7 @@ import { getEncounters } from "./resouces/fhirEncounter";
         <sl-button
           type="primary"
           on:click|preventDefault={() => {
-            navigate(`/assessment-form/${ehrId}/None/${id}`);
+            navigate(`/vaccine/${ehrId}/None/${id}`);
           }}
         >
           <sl-icon name="plus-square-fill" slot="prefix" />Add Vaccination
@@ -282,6 +288,7 @@ import { getEncounters } from "./resouces/fhirEncounter";
     {#if time.length > 0}
       <sl-tab-group bind:this={navigation}>
         <sl-tab slot="nav" panel="vital">Vital Signs</sl-tab>
+        <sl-tab slot="nav" panel="immunization">Immunization </sl-tab>
         <sl-tab slot="nav" panel="clinical">Clinical Data</sl-tab>
         <sl-tab slot="nav" panel="travel">Travel History</sl-tab>
         <sl-tab slot="nav" panel="lab">Laboratory Tests</sl-tab>
@@ -601,6 +608,37 @@ import { getEncounters } from "./resouces/fhirEncounter";
 
                   <div class="text-center text-lg font-semibold capitalize">
                     <p>{encounter.status}</p>
+                  </div>
+                </div>
+                <br />
+              {/if}
+            {/each}
+          </div>
+        </sl-tab-panel>
+
+        <sl-tab-panel name="immunization">
+          <div class="flex flex-col gap-3 p-5">
+            {#each vaccinations as vaccine}
+              {#if vaccinations.length > 0}
+                <div
+                  class="grid grid-cols-3 p-5 rounded-lg shadow-inner bg-gray-900 text-gray-200 items-center"
+                >
+                  <div class="text-center text-lg font-semibold">
+                    <sl-format-date
+                      month="long"
+                      day="numeric"
+                      hour="numeric"
+                      minute="numeric"
+                      hour-format="12"
+                      date={vaccine[2]}
+                    />
+                  </div>
+                  <div class="text-center text-lg font-semibold">
+                    <p>{vaccine[1]}</p>
+                  </div>
+
+                  <div class="text-center text-lg font-semibold capitalize">
+                    <p>{vaccine[3]}</p>
                   </div>
                 </div>
                 <br />
