@@ -98,7 +98,15 @@ import { onMount } from "svelte";
         <mb-option value="Covaxin"  label="Covaxin"></mb-option>   
     </mb-text-select>
     <mb-date time path="vaccine.v2/covid_vaccine/date_and_time_taken" label="Date and Time taken"></mb-date>
-    <mb-input path="vaccine.v2/covid_vaccine/dosage_information" label="Dosage Information"></mb-input>
+
+    <mb-text-select path="vaccine.v2/covid_vaccine/dosage_information" label="Dosage Information">
+      <mb-option value="First Dose"  label="First Dose"></mb-option>
+      <mb-option value="Second Dose"  label="Second Dose"></mb-option>
+      <mb-option value="Booster Shot"  label="Booster Shot"></mb-option>
+
+    </mb-text-select>
+
+
     <mb-context path="vaccine.v2/covid_vaccine/language"></mb-context>
     <mb-context path="vaccine.v2/covid_vaccine/encoding"></mb-context>
     <mb-context path="vaccine.v2/covid_vaccine/subject"></mb-context>
@@ -108,7 +116,7 @@ import { onMount } from "svelte";
     <mb-context path="vaccine.v2/composer"></mb-context>
 
     <mb-submit class="my-5">
-        <sl-button type="primary" size="large" {loading}>Submit</sl-button>
+        <sl-button type="primary" size="medium" {loading} >Submit</sl-button>
     </mb-submit>
 
 </mb-form>
