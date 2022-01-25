@@ -1,4 +1,6 @@
-export const immuneResource = (AdhaarNo, fhirPatientId, {date,name}) => {
+import { FHIR } from "./../../links"
+
+export const immuneResource = async (AdhaarNo, fhirPatientId, {date,name,dosage}) => {
 
     
 
@@ -17,12 +19,20 @@ export const immuneResource = (AdhaarNo, fhirPatientId, {date,name}) => {
 
         manufacturer: {
             "reference": {name}
-        } 
+        },
+
+        "protocolApplied" : [{ // Protocol followed by the provider
+            "series" : {name},
+            "doseNumberString" : dosage,
+            seriesDosesPositiveInt : 2
+            
+          }]
 
     }
 
 
-    console.log(resource)
+    const resp = await FHIR.post("/Immunization", resource);
+    console.log(resp);
 
 }
 

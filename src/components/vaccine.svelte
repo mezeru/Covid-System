@@ -64,7 +64,13 @@ import { immuneResource } from "./resouces/fhirImmunization";
       })
       .then((response) => {
         if (response.status == 200) {
-          
+
+          console.log(e.detail)
+
+          immuneResource(adhaarId,ehrId,{
+            date: e.detail["vaccine.v2/covid_vaccine/date_and_time_taken"],
+            name: e.detail["vaccine.v2/covid_vaccine/name_of_manufacturer_vaccine"],
+            dosage: e.detail["vaccine.v2/covid_vaccine/dosage_informatio"]})
           navigo(-1);
           
         }
