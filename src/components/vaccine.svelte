@@ -46,10 +46,8 @@ import { immuneResource } from "./resouces/fhirImmunization";
           })
           .then((response) => {
             if (response.status == 200) {
-             
-              immuneResource(adhaarId,ehrId,{date: 12,name: "yesh" })
 
-              // navigo(-1);
+              navigo(-1);
             }
           })
           .catch((err) => {
@@ -67,8 +65,8 @@ import { immuneResource } from "./resouces/fhirImmunization";
       .then((response) => {
         if (response.status == 200) {
           
-          // navigo(-1);
-          immuneResource(adhaarId,ehrId,{date: 12,name: "yesh" })
+          navigo(-1);
+          
         }
       })
       .catch((err) => {

@@ -15,6 +15,7 @@ VaccineList
   import loading2 from "../../assets/loading2.svg";
   import { FHIR, openehr } from "../links";
   import { getEncounters } from "./resouces/fhirEncounter";
+import { EHR } from "./resouces/openEHR";
 
   const navigate = useNavigate();
 
@@ -41,7 +42,8 @@ VaccineList
   let loading = true;
   let navigation;
   let tabs = {
-          vital: "clinical",
+          vital: "immunization",
+          immunization: "clinical",
           clinical: "travel",
           travel: "lab",
           lab: "assessment",
@@ -128,26 +130,7 @@ VaccineList
         console.log("EHR Does not exist, creating");
         const r = await openehr.put(
           `/ehr/${ehrId}`,
-          {
-            _type: "EHR_STATUS",
-            archetype_node_id: "openEHR-EHR-EHR_STATUS.generic.v1",
-            name: {
-              value: "ehr status",
-            },
-            subject: {
-              external_ref: {
-                id: {
-                  _type: "GENERIC_ID",
-                  value: ehrId,
-                  scheme: ehrId,
-                },
-                namespace: "EHR",
-                type: "PERSON",
-              },
-            },
-            is_modifiable: "true",
-            is_queryable: "true",
-          },
+          EHR(id),
           {
             headers: {
               Accept: "application/json",
@@ -515,22 +498,9 @@ VaccineList
                   class="rounded-lg shadow-inner bg-gray-900 text-gray-200 p-5"
                 >
                   <div class="grid grid-cols-2 p-2 items-center">
-                    <div class="text-center text-xl font-semibold">
+                    <div class="text-center text-xl">
                       <div>
-                        <sl-format-date
-                          month="long"
-                          day="numeric"
-                          hour-format="12"
-                          date={asses[3]}
-                        />
-                      </div>
-                      <div>
-                        <sl-format-date
-                          hour="numeric"
-                          minute="numeric"
-                          hour-format="12"
-                          date={asses[3]}
-                        />
+                          <p class="text-center text-lg" style="display: {asses[5] === null ? "none" : "block"} ;"><span class="font-bold">{asses[5]} Result : </span><span class="text-white font-bold py-2 px-4 border m-4 rounded {asses[2] == 'Present' ? "bg-red-700 border-red-700" : asses[2] == 'Absent' ? "bg-green-700 border-green-700" : "bg-blue-700 border-blue-700" }">{asses[2]}</span></p>
                       </div>
                     </div>
                     <div class="text-center text-xl font-semibold">
@@ -538,9 +508,24 @@ VaccineList
                     </div>
                    
                   </div>
+                  <div class="flex justify-center items-center flex-col font-bold text-xl">
                   <div>
-                    <p class="text-center text-lg" style="display: {asses[5] === null ? "none" : "block"} ;"><span class="font-bold">{asses[5]} Result : </span><span class="text-white font-bold py-2 px-4 border m-4 rounded {asses[2] == 'Present' ? "bg-red-700 border-red-700" : asses[2] == 'Absent' ? "bg-green-700 border-green-700" : "bg-blue-700 border-blue-700" }">{asses[2]}</span></p>
+                    <sl-format-date
+                    month="long"
+                    day="numeric"
+                    hour-format="12"
+                    date={asses[3]}
+                  />
+                </div>
+                <div>
+                  <sl-format-date
+                    hour="numeric"
+                    minute="numeric"
+                    hour-format="12"
+                    date={asses[3]}
+                  />
                   </div>
+                </div>
                 </div>
               {/if}
             {/each}
