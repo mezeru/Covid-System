@@ -5,6 +5,7 @@
     import { useNavigate } from "svelte-navigator";
 import { ehrscape } from ".././links";
 import { onMount } from "svelte";
+import { immuneResource } from "./resouces/fhirImmunization";
     export let ehrId;
     export let compId;
     export let adhaarId;
@@ -46,7 +47,9 @@ import { onMount } from "svelte";
           .then((response) => {
             if (response.status == 200) {
              
-              navigo(-1);
+              immuneResource(adhaarId,ehrId,{date: 12,name: "yesh" })
+
+              // navigo(-1);
             }
           })
           .catch((err) => {
@@ -64,7 +67,8 @@ import { onMount } from "svelte";
       .then((response) => {
         if (response.status == 200) {
           
-          navigo(-1);
+          // navigo(-1);
+          immuneResource(adhaarId,ehrId,{date: 12,name: "yesh" })
         }
       })
       .catch((err) => {

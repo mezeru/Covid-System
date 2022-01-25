@@ -1,9 +1,11 @@
-export const convertResource = (AdhaarNo, fhirPatientId) => {
+export const immuneResource = (AdhaarNo, fhirPatientId, {date,name}) => {
 
     
 
     const resource = {
         resourceType: "Immunization",
+
+        status: "completed",
 
         identifier : [{value: AdhaarNo}],
 
@@ -11,11 +13,16 @@ export const convertResource = (AdhaarNo, fhirPatientId) => {
             reference: `Patient/${fhirPatientId}`
         },
 
-        
-        
+        occurrenceDateTime: {date},
+
+        manufacturer: {
+            "reference": {name}
+        } 
+
     }
 
-    return resource;
+
+    console.log(resource)
 
 }
 
