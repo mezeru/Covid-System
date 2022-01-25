@@ -1,5 +1,5 @@
 <script>
-  import Form from "./Startform.svelte";
+  import Form from "./forms/Startform.svelte";
   import axios from "axios";
   export let baseURL;
   let ehrId;

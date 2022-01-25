@@ -2,9 +2,9 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
   import { useNavigate } from "svelte-navigator";
-  import { ehrscape } from "../links";
+  import { ehrscape } from "../../links";
   import { bind } from "svelte/internal";
-import { encounterResource } from "./resouces/fhirEncounter";
+import { encounterResource } from "../resouces/fhirEncounter";
 
   export let ehrId;
   export let compId;

@@ -3,9 +3,9 @@
 
     import { fade } from "svelte/transition";
     import { useNavigate } from "svelte-navigator";
-import { ehrscape } from ".././links";
-import { onMount } from "svelte";
-import { immuneResource } from "./resouces/fhirImmunization";
+    import { ehrscape } from "../../links";
+    import { onMount } from "svelte";
+    import { immuneResource } from "../resouces/fhirImmunization";
     export let ehrId;
     export let compId;
     export let adhaarId;

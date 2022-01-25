@@ -2,18 +2,18 @@
   import "medblocks-ui/dist/medblocks";
   import "medblocks-ui/dist/shoelace";
   import "./style.css";
-  import New from "./components/newPatient.svelte";
+  import New from "./components/forms/newPatient.svelte";
   import Home from "./components/Home.svelte";
   import Delete from "./components/deleteEHR.svelte";
   import Get from "./components/list.svelte";
   import { Router, Route } from "svelte-navigator";
-  import CompoForm from "./components/Covid.svelte";
+  import CompoForm from "./components/forms/Covid.svelte";
   import Patient from "./components/getPatient.svelte";
   import NavBar from "./components/nav.svelte";
   import Templates from "./components/Templates.svelte";
   import GetOne from "./components/GetOne.svelte";
-  import AssessForm from "./components/assessForm.svelte";
-  import Vaccine from "./components/vaccine.svelte";
+  import AssessForm from "./components/forms/assessForm.svelte";
+  import Vaccine from "./components/forms/vaccine.svelte";
 </script>
 
 <Router>
