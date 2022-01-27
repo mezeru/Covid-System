@@ -34,7 +34,6 @@ import { EHR } from "./resouces/openEHR";
   let clinical = [];
   let travel = [];
   let assess = [];
-  let diag = [];
   let time = [];
   let encounters = []
   let vaccinations = []
@@ -48,7 +47,6 @@ import { EHR } from "./resouces/openEHR";
           travel: "lab",
           lab: "assessment",
           assessment: "compositions",
-          
           compositions: "encounter",
           encounter: null
         }
@@ -88,6 +86,7 @@ import { EHR } from "./resouces/openEHR";
     id = fhirPatient.identifier[0].value
 
     let list;
+
     temp = await Vitals(ehrId);
     time = temp.rows?.map((x) => x[0]?.value).filter(e => e);
 
@@ -196,7 +195,7 @@ import { EHR } from "./resouces/openEHR";
       
     </div>
 
-    <div class="flex justify-between items-center">
+    <div class="grid grid-cols-2 justify-between items-center">
       {#if !loading}
         
         <p
@@ -539,10 +538,13 @@ import { EHR } from "./resouces/openEHR";
                 <div
                   class="grid grid-cols-3 p-5 rounded-lg shadow-inner bg-gray-900 text-gray-200 items-center"
                 >
-                  <div class="text-center text-lg font-semibold">
+                  <div class="flex flex-col text-center text-lg font-semibold">
                     <sl-format-date
                       month="long"
                       day="numeric"
+                      date={comp[0]}
+                    />
+                    <sl-format-date
                       hour="numeric"
                       minute="numeric"
                       hour-format="12"
@@ -577,10 +579,13 @@ import { EHR } from "./resouces/openEHR";
                 <div
                   class="grid grid-cols-3 p-5 rounded-lg shadow-inner bg-gray-900 text-gray-200 items-center"
                 >
-                  <div class="text-center text-lg font-semibold">
+                  <div class="flex flex-col text-center text-lg font-semibold">
                     <sl-format-date
                       month="long"
                       day="numeric"
+                      date={encounter.meta.lastUpdated}
+                    />
+                    <sl-format-date
                       hour="numeric"
                       minute="numeric"
                       hour-format="12"
@@ -608,14 +613,17 @@ import { EHR } from "./resouces/openEHR";
                 <div
                   class="grid grid-cols-3 p-5 rounded-lg shadow-inner bg-gray-900 text-gray-200 items-center"
                 >
-                  <div class="text-center text-lg font-semibold">
+                  <div class="text-center flex flex-col text-lg font-semibold">
                     <sl-format-date
-                      month="long"
                       day="numeric"
-                      hour="numeric"
-                      minute="numeric"
-                      hour-format="12"
+                      month="long"
                       date={vaccine[2]}
+                    />
+                    <sl-format-date
+                    hour="numeric"
+                    minute="numeric"
+                    hour-format="12"
+                    date={vaccine[2]}
                     />
                   </div>
                   <div class="text-center text-lg font-semibold">
