@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
   import { useNavigate } from "svelte-navigator";
-  import { ehrscape } from "../../links";
+  import { ehrscape, handleDependencyInjection } from "../../links";
 import { encounterResource } from "../resouces/fhirEncounter";
 
   export let ehrId;
@@ -80,6 +80,7 @@ import { encounterResource } from "../resouces/fhirEncounter";
   class="flex flex-col gap-3 p-10 m-10 rounded-lg border"
   ref="formRef"
   on:mb-submit={handleSubmit}
+  on:mb-dependency={handleDependencyInjection}
 >
   <sl-tab-group>
     <sl-tab slot="nav" panel="assess">Assessment</sl-tab>

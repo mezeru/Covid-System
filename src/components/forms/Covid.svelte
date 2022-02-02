@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
   import { useNavigate } from "svelte-navigator";
-  import { ehrscape } from "../../links";
+  import { ehrscape, handleDependencyInjection, hermes } from "../../links";
   import { bind } from "svelte/internal";
 import { encounterResource } from "../resouces/fhirEncounter";
 
@@ -17,6 +17,8 @@ import { encounterResource } from "../resouces/fhirEncounter";
     "lab": null
   };
   let navigo = useNavigate();
+
+  
 
   onMount(async () => {
 
@@ -75,6 +77,8 @@ import { encounterResource } from "../resouces/fhirEncounter";
             
           });
     }
+
+    console.log(e.detail)
     
   };
 </script>
@@ -86,6 +90,7 @@ import { encounterResource } from "../resouces/fhirEncounter";
   class="flex flex-col gap-3 p-10 m-10 rounded-lg border"
   ref="formRef"
   on:mb-submit={handleSubmit}
+  on:mb-dependency={handleDependencyInjection}
 >
   <sl-tab-group bind:this={navigation}>
     <sl-tab slot="nav" panel="clinical">OPD</sl-tab>
@@ -128,11 +133,15 @@ import { encounterResource } from "../resouces/fhirEncounter";
         <mb-context path="opd_temp.v1/clinical_background/age/encoding" />
         <mb-context path="opd_temp.v1/clinical_background/age/subject" />
 
+        
+
         <mb-input
           reuired
           path="opd_temp.v1/clinical_background/symptom_sign_screening_questionnaire/any_event:0/screening_purpose"
           label="Screening purpose"
         />
+
+        
         <mb-select
           required
           path="opd_temp.v1/clinical_background/symptom_sign_screening_questionnaire/any_event:0/presence_of_any_symptoms_or_signs"
@@ -142,6 +151,7 @@ import { encounterResource } from "../resouces/fhirEncounter";
           <mb-option value="at0032" label="Absent" />
           <mb-option value="at0033" label="Unknown" />
         </mb-select>
+        
         <mb-input
           required
           path="opd_temp.v1/clinical_background/symptom_sign_screening_questionnaire/any_event:0/specific_symptom_sign:0/symptom_or_sign_name"

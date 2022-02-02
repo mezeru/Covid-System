@@ -3,7 +3,7 @@
 
     import { fade } from "svelte/transition";
     import { useNavigate } from "svelte-navigator";
-    import { ehrscape } from "../../links";
+    import { ehrscape, handleDependencyInjection } from "../../links";
     import { onMount } from "svelte";
     import { immuneResource } from "../resouces/fhirImmunization";
     export let ehrId;
@@ -94,7 +94,9 @@
   in:fade={{ duration: 1000 }}
   class="flex flex-col gap-3 p-10 m-10 rounded-lg border"
   ref="formRef"
-  on:mb-submit={handleSubmit}>
+  on:mb-submit={handleSubmit}
+  on:mb-dependency={handleDependencyInjection}
+  >
 
     <mb-context path="vaccine.v2/context/start_time"></mb-context>
     <mb-context path="vaccine.v2/context/setting"></mb-context>
