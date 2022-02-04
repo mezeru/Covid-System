@@ -1,31 +1,16 @@
 version: "3.7"
 services:
-  # wal-listner:
-  #   image: medblocks/wal-listner
-  #   environment:
-  #     WAIT_HOSTS: db:5432, openehr:8080
-  #     WAIT_TIMEOUT: 300
-  #     WAIT_AFTER: 5
-  #     WAIT_SLEEP_INTERVAL: 5
-  #   command: sh -c "/wait && /wal-listner -c /app/config.yml"
-  #   volumes:
-  #     - ./wal.yml:/app/config.yml
-  #   depends_on:
-  #     - db
-  #     - openehr
-  #     - nats
-  # nats:
-  #   image: docker.io/library/nats-streaming:0.11.2
-  #   ports:
-  #     - "4222:4222"
   openehr:
-    image: "ehrbase/ehrbase:0.16.5"
+    image: "ehrbase/ehrbase:next"
     environment:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/ehrbase"
       SPRING_DATASOURCE_USERNAME: ehrbase
       SPRING_DATASOURCE_PASSWORD: ehrbase
       SERVER_AQLCONFIG_USEJSQUERY: "false"
       SERVER_NODENAME: "localhost"
+      WEB_CORS_ALLOWEDORIGINPATTERNS: "*"
+      WEB_CORS_ALLOWEDMETHODS: "GET,PUT,DELETE,POST,OPTIONS"
+      WEB_CORS_ALLOWCREDENTIALS: "false"
     depends_on:
       - db
     ports:
@@ -37,10 +22,13 @@ services:
       - max_replication_slots=10
       - -c
       - wal_level=logical
+      - -c
+      - intervalstyle=iso_8601
     volumes:
       - db-data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
+
       POSTGRES_PASSWORD: postgres
     ports:
       - 5432:5432
