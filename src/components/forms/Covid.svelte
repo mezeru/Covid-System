@@ -64,7 +64,7 @@ import { encounterResource } from "../resouces/fhirEncounter";
             params: { format: "FLAT", templateId, ehrId },
           })
           .then((response) => {
-            if (response.status == 200) {
+            if (response.status == 201) {
               if(compId === "None"){
                 encounterResource(adhaarId,ehrId,0)
               }
@@ -134,12 +134,20 @@ import { encounterResource } from "../resouces/fhirEncounter";
         <mb-context path="opd_temp.v1/clinical_background/age/subject" />
 
         
+        <p>Presenting problem</p>
+        <mb-search
+        path="opd_temp.v1/clinical_background/symptom_sign_screening_questionnaire/any_event:0/screening_purpose"
+        hits={5}
+        terminology="Snomed CT"
+      >
+        <mb-filter value="<404684003" label="Clinical Findings" />
+      </mb-search>
 
-        <mb-input
+        <!-- <mb-input
           reuired
           path="opd_temp.v1/clinical_background/symptom_sign_screening_questionnaire/any_event:0/screening_purpose"
           label="Screening purpose"
-        />
+        /> -->
 
         
         <mb-select
@@ -151,12 +159,21 @@ import { encounterResource } from "../resouces/fhirEncounter";
           <mb-option value="at0032" label="Absent" />
           <mb-option value="at0033" label="Unknown" />
         </mb-select>
+
+        <p>Symptom or sign name</p>
+        <mb-search
+        path="opd_temp.v1/clinical_background/symptom_sign_screening_questionnaire/any_event:0/specific_symptom_sign:0/symptom_or_sign_name"
+        hits={5}
+        terminology="Snomed CT"
+      >
+        <mb-filter value="<404684003" label="Clinical Findings" />
+      </mb-search>
         
-        <mb-input
+        <!-- <mb-input
           required
           path="opd_temp.v1/clinical_background/symptom_sign_screening_questionnaire/any_event:0/specific_symptom_sign:0/symptom_or_sign_name"
           label="Symptom or sign name"
-        />
+        /> -->
 
         <mb-context
           path="opd_temp.v1/clinical_background/symptom_sign_screening_questionnaire/any_event:0/time"
