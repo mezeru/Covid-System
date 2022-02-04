@@ -270,11 +270,25 @@ import { EHR } from "./resouces/openEHR";
     {#if time.length > 0}
       <sl-tab-group bind:this={navigation}>
         <sl-tab slot="nav" panel="vital">Vital Signs</sl-tab>
+
+        {#if vaccinations.length > 0}
         <sl-tab slot="nav" panel="immunization">Immunization </sl-tab>
+        {/if}
+
         <sl-tab slot="nav" panel="clinical">Clinical Data</sl-tab>
+
+        {#if travel[0][1]}
         <sl-tab slot="nav" panel="travel">Travel History</sl-tab>
+        {/if}
+
+        {#if listLabs[0][1] > 0}
         <sl-tab slot="nav" panel="lab">Laboratory Tests</sl-tab>
+        {/if}
+
+        {#if assess.length > 0}
         <sl-tab slot="nav" panel="assessment">Assessments</sl-tab>
+        {/if}
+
         <sl-tab slot="nav" panel="compositions">Compositions Posted</sl-tab>
         <sl-tab slot="nav" panel="encounter">Encounters</sl-tab>
 
@@ -284,16 +298,16 @@ import { EHR } from "./resouces/openEHR";
             <div
               class="flex flex-col gap-3 p-5 rounded-lg border justify-around"
             >
-              <div class="flex flex-col gap-3 p-5">
-                <p class="font-semibold text-2xl text-center">
+              <div class="grid gap-5 p-5 cursor-pointer" style="grid-template-rows: 2.5fr 5fr;">
+                <p class="font-semibold text-3xl text-center">
                   Screening Purpose
                 </p>
-                <div class="grid grid-cols-3">
+                <div class="grid {`grid-cols-${clinical.length === 1 ? 1 : 2}`}">
                   {#each clinical as Symptom}
                     {#if Symptom[2] != null && Symptom[2] != "None"}
                       <div class="p-2">
                         <p
-                          class="text-2xl text-white border rounded text-center bg-red-600 py-2"
+                          class="text-2xl text-white border rounded text-center bg-blue-500 py-2 px-2 cursor-pointer hover:bg-blue-700 focus:ring-violet-300"
                         >
                           {Symptom[2]}
                         </p>
@@ -303,21 +317,22 @@ import { EHR } from "./resouces/openEHR";
                 </div>
               </div>
             </div>
+
             <div
-              class="flex flex-row gap-3 p-5 rounded-lg border justify-around items-center"
+              class="flex flex-col gap-3 p-5 rounded-lg border justify-around"
             >
-              <div class="flex flex-col gap-3 p-5">
-                <p class="font-semibold text-2xl text-center">
-                  Present Conditions
+              <div class="grid gap-5 p-5 cursor-pointer" style="grid-template-rows: 2.5fr 5fr;">
+                <p class="font-semibold text-3xl text-center">
+                  Symptoms and Signs
                 </p>
-                <div class="grid grid-cols-1">
+                <div class="grid {`grid-cols-${clinical.length === 1 ? 1 : 2}`}">
                   {#each clinical as Symptom}
-                    {#if Symptom[4] != null && Symptom[4] != "None"}
+                    {#if Symptom[2] != null && Symptom[2] != "None"}
                       <div class="p-2">
                         <p
-                          class="text-2xl text-white border rounded text-center bg-red-600 py-2"
+                          class="text-2xl text-white border rounded text-center bg-blue-500 py-2 px-2 cursor-pointer hover:bg-blue-700 focus:ring-violet-300"
                         >
-                          {Symptom[4]}
+                          {Symptom[1]}
                         </p>
                       </div>
                     {/if}
@@ -325,7 +340,8 @@ import { EHR } from "./resouces/openEHR";
                 </div>
               </div>
             </div>
-          </div>
+
+          
         </sl-tab-panel>
 
         <sl-tab-panel name="vital">
