@@ -8,7 +8,7 @@ headers: {
   }});
 
 export const hermes = axios.create({
-    baseURL: `https://localhost:8080/v1`,
+    baseURL: `https://snomed.test4.voiceintern.com/v1`,
   });
 
 

@@ -1,4 +1,9 @@
 <script>
+  export let location;
+  export let navigate;
+  location
+  navigate
+
   import Form from "./forms/Startform.svelte";
   import axios from "axios";
   export let baseURL;

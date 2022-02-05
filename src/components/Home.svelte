@@ -1,5 +1,10 @@
 <script>
   import { Router, Link, Route } from "svelte-navigator";
+  export let location;
+  export let navigate;
+  location
+  navigate
+  
 </script>
 
 <div class="flex flex-col justify-center items-center">
@@ -22,6 +27,7 @@
       </sl-button>
     </Link>
   </div>
+  
 
   <div>
     <Link to="/delete" class="flex-auto flex justify-center">

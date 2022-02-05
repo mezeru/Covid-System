@@ -3,6 +3,7 @@
   import { useNavigate } from "svelte-navigator";
   import {convertResource} from "../resouces/fhirPatient";
   import {EHR} from "../resouces/openEHR";
+  import OptKit from 'optkit';
 
   let ehrId;
   const navigo = useNavigate();
@@ -20,27 +21,41 @@
     // Creating FHIR Resource
 
     try{
-      const fhirResp = await FHIR.post("/Patient",fhirResource);
+
+      const existsFHIR = await FHIR.get(`/Patient?identifier=${patient.AdhaarNo}`).then(e => e.data.total)
+
+      if(existsFHIR === 0 ){
+        
+        const fhirResp = await FHIR.post("/Patient",fhirResource);
       
-      if(fhirResp.status === 201){
-        try{
-          const respEHR = await openehr.put(`/ehr/${fhirResp.data.id}`,EHR(patient.AdhaarNo),
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      );
+      
+        if(fhirResp.status === 201){
+          try{
+            const respEHR = await openehr.put(`/ehr/${fhirResp.data.id}`,EHR(patient.AdhaarNo),
+          {
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
 
-        
-          navigo(`/patient/${fhirResp.data.id}`);;
-          console.log("here");
-        
+          
+            navigo(`/patient/${fhirResp.data.id}`);;
+            console.log("here");
+          
 
-        }
-        catch(e){
-          console.log({e});
-        }
+          }
+          catch(e){
+            console.log({e});
+          }
+
+      }
+      
+
+      
+      }
+      else{
+        alert("Patient Already exists")
       }
     }
     catch(e){
@@ -49,6 +64,7 @@
   };
 </script>
 
+<OptKit/>
 <form
   class="flex-col gap-3 p-5 m-10 shadow-lg rounded-lg border"
   on:submit|preventDefault={handleSubmitDemo}

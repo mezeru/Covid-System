@@ -20,26 +20,24 @@
   <NavBar />
 
   <main class="flex flex-col gap-5 h-full">
-    <Route path="/new" component={New} />
+    <Route path="/new" component={New} primary={false} />
 
-    <Route path="/get" component={Get} />
+    <Route path="/get" component={Get} primary={false} />
 
-    <Route path="/delete" component={Delete} />
+    <Route path="/delete" component={Delete} primary={false} />
 
-    <Route path="/patient/:ehrId/" component={Patient} />
+    <Route path="/patient/:ehrId/" component={Patient} primary={false} />
 
-    <Route path="/postdata/:ehrId/:compId/:adhaarId" component={CompoForm} />
+    <Route path="/postdata/:ehrId/:compId/:adhaarId" component={CompoForm} primary={false} />
 
-    <Route path="/vaccine/:ehrId/:compId/:adhaarId" component={Vaccine} />
+    <Route path="/vaccine/:ehrId/:compId/:adhaarId" component={Vaccine} primary={false} />
 
-    <Route path="/assessment-form/:ehrId/:compId/:adhaarId" component={AssessForm} />
+    <Route path="/assessment-form/:ehrId/:compId/:adhaarId" component={AssessForm} primary={false} />
 
-    <Route path="/getpatient" component={GetOne} />
+    <Route path="/getpatient" component={GetOne} primary={false} />
 
-    <Route path="/Templates" component={Templates} />
+    <Route path="/Templates" component={Templates} primary={false} />
 
-    <Route>
-      <Home />
-    </Route>
+    <Route path="/" component={Home} primary={false} />
   </main>
 </Router>

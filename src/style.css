@@ -19,7 +19,12 @@ h1,h2{
 }
 
 .s-lX3rkpEI-BOf{
-    margin-bottom: 2em;
+    
+    display: flex;
+    align-items:center;
+    flex-direction: column;
+    row-gap: 0.5em;
+    font-family:Georgia, 'Times New Roman', Times, serif;
 }
 
 .ok{

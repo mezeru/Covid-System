@@ -1,4 +1,10 @@
 <script>
+
+  export let location;
+  export let navigate;
+  location
+  navigate
+
   import axios from "axios";
   import { FHIR } from "../links";
   let number;
