@@ -45,6 +45,18 @@
   });
 
 
+  const getAge = (dateString) => {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+
   const handleFilter = (value) => {
     if (value) {
       patients = fuseObj.search(value).map((x) => x.item);
@@ -107,13 +119,23 @@
         in:fly={{ y: 1000, duration: (i+1)*300, easing: expoOut }}
         class="m-5 rounded-lg border-2 border-gray-200 px-1 bg-gray-800 shadow-xl"
       >
-        <div class="px-6 py-4 grid grid-cols-5">
+        <div class="px-6 py-4 grid grid-cols-7">
           <div
             class="flex text-3xl font-bold mb-2 justify-center items-center text-gray-50
           "
           >
             <p class="text-center">
               {`${patient.name[0].given[0]}  ${patient.name[0].family !== undefined ? patient.name[0].family : " "}`}
+            </p>
+          </div>
+          <div class="flex justify-center items-center">
+            <p class="text-gray-300 font-bold text-xl">
+              {patient.birthDate === undefined ? "-" : patient.birthDate}
+            </p>
+          </div>
+          <div class="flex justify-center items-center">
+            <p class="text-gray-300 font-bold text-xl">
+              {patient.birthDate === undefined ? "-" : getAge(patient.birthDate)}
             </p>
           </div>
           <div class="flex justify-center items-center">

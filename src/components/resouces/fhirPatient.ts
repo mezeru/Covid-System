@@ -13,7 +13,9 @@ export const convertResource = (patient) => {
             family: name[name.length - 1 > 0 ? name.length - 1 : " "] 
         }],
 
-        gender: patient["Gender"].toLowerCase(),
+        "birthDate" : patient.dob,
+
+        gender: patient.Gender.toLowerCase(),
 
         telecom: [{
             system: "phone",
