@@ -30,6 +30,7 @@ import { encounterResource } from "../resouces/fhirEncounter";
   const handleSubmit = (e) => {
     loading = true;
 
+    console.log(e.detail)
 
     if(compId !== 'None'){
       ehrscape
@@ -118,7 +119,7 @@ import { encounterResource } from "../resouces/fhirEncounter";
     </div>
       <mb-input path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/description" label="Description"></mb-input>
       <mb-date time path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/date_identified" label="Date identified"></mb-date>
-      <mb-checkbox path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/mitigated" label="Mitigated"></mb-checkbox>
+      <!-- <mb-checkbox path="assessment.v0/covid-19_infection_risk_assessment/risk_factors:0/mitigated" label="Mitigated"></mb-checkbox> -->
       <mb-select path="assessment.v0/covid-19_infection_risk_assessment/risk_assessment" label="Risk assessment" terminology="local">
         <mb-option value="at0.16" label="Low risk"></mb-option>
       <mb-option value="at0.17" label="High risk"></mb-option>
