@@ -17,8 +17,8 @@ export const immuneResource = async (AdhaarNo, fhirPatientId, {date,name,dosage}
 
         occurrenceDateTime: {date},
 
-        manufacturer: {
-            "reference": {name}
+        'vaccineCode': {
+            'text': {name}
         },
 
         "protocolApplied" : [{ // Protocol followed by the provider
@@ -32,7 +32,7 @@ export const immuneResource = async (AdhaarNo, fhirPatientId, {date,name,dosage}
 
 
     const resp = await FHIR.post("/Immunization", resource);
-    console.log(resp);
+    console.log(resource);
 
 }
 
