@@ -70,7 +70,7 @@
           immuneResource(adhaarId,ehrId,{
             date: e.detail["vaccine.v2/covid_vaccine/date_and_time_taken"],
             name: e.detail["vaccine.v2/covid_vaccine/name_of_manufacturer_vaccine"],
-            dosage: e.detail["vaccine.v2/covid_vaccine/dosage_informatio"]})
+            dosage: e.detail["vaccine.v2/covid_vaccine/dosage_information"]})
           navigo(-1);
           
         }
