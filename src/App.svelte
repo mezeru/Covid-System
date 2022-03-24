@@ -16,7 +16,9 @@
   import Vaccine from "./components/forms/vaccine.svelte";
 </script>
 
+
 <Router>
+ 
   <NavBar />
 
   <main class="flex flex-col gap-5 h-full">

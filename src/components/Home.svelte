@@ -8,6 +8,7 @@
 </script>
 
 <div class="flex flex-col justify-center items-center">
+  <h1 class="text-7xl p-5 m-5 font-bold text-center">ISCov - 19</h1>
   <div class="grid grid-cols-3 gap-10 m-10">
     <Link to="/new" class="flex-auto flex justify-center">
       <sl-button type="primary" size="large"

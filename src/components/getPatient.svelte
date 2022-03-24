@@ -111,7 +111,6 @@ import { EHR } from "./resouces/openEHR";
     list = await VaccineList(ehrId);
     vaccinations = list.rows;
 
-    console.log({vaccinations})
 
 
 
