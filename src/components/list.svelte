@@ -140,7 +140,7 @@
           </div>
           <div class="flex justify-center items-center">
             <p class="text-gray-300 font-bold text-xl">
-              {patient.gender.toUpperCase()}
+              {patient.gender?.toUpperCase()}
             </p>
           </div>
 

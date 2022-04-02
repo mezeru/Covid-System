@@ -276,7 +276,7 @@ import { EHR } from "./resouces/openEHR";
 
         <sl-tab slot="nav" panel="clinical">Clinical Data</sl-tab>
 
-        {#if travel[0][1]}
+        {#if travel[0] }
         <sl-tab slot="nav" panel="travel">Travel History</sl-tab>
         {/if}
 
