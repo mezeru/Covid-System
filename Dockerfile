@@ -1,10 +1,12 @@
-FROM node:16.13.2 as build-stage
+FROM node:16.13.2 as builder
 RUN mkdir /app
 WORKDIR /app
 COPY package.json package.json
 RUN npm install --save --legacy-peer-deps
-COPY . .
+COPY . . 
 RUN npm run build
 
-FROM nginx
-COPY --from=build-stage /app/dist/ /usr/share/nginx/html
+FROM caddy:2
+COPY Caddyfile /etc/caddy/Caddyfile
+COPY --from=builder /app/dist /usr/share/caddy
+EXPOSE 8000

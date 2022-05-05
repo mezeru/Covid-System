@@ -1,8 +1,12 @@
 import axios from "axios"
 
-export const FHIR = axios.create({baseURL:"http://localhost:8080/fhir"});
+const baseURL_FHIR = import.meta.env.VITE_BASE_URL_FHIR;
+const baseURL_OPENEHR = import.meta.env.VITE_BASE_URL_OPENEHR;
+const baseURL_EHRSCAPE = import.meta.env.VITE_BASE_URL_EHRSCAPE;
 
-export const openehr = axios.create({baseURL:"http://localhost:8080/ehrbase/rest/openehr/v1",
+export const FHIR = axios.create({baseURL: `${baseURL_FHIR}`});
+
+export const openehr = axios.create({baseURL: `${baseURL_OPENEHR}`,
 headers: {
     Accept: "application/json",
   }});
@@ -13,7 +17,7 @@ export const hermes = axios.create({
 
 
   export const ehrscape = axios.create({
-    baseURL:"http://localhost:8080/ehrbase/rest/ecis/v1",
+    baseURL: `${baseURL_EHRSCAPE}`,
     headers: {
       Accept: "application/json",
     },

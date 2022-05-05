@@ -280,7 +280,7 @@ import { EHR } from "./resouces/openEHR";
         <sl-tab slot="nav" panel="travel">Travel History</sl-tab>
         {/if}
 
-        {#if listLabs[0][1] > 0}
+        {#if listLabs[0] > 0}
         <sl-tab slot="nav" panel="lab">Laboratory Tests</sl-tab>
         {/if}
 

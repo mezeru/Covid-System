@@ -1,17 +1,9 @@
-:80 {
-    handle /fhir/* {
-        reverse_proxy fhir:8080
-    }
-    handle /ehrbase/* {
-        reverse_proxy openehr:8080
-    }
-    handle {
-        respond "Not Found" 404
-    }
-    header /* {
-        ?Access-Control-Allow-Origin "*"
-        Access-Control-Allow-Methods "OPTIONS, GET, PUT, POST, DELETE"
-        Access-Control-Allow-Headers "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization, X-CSRF-Token, Cache-Control"
-        Access-Control-Expose-Headers Authorization
+:8080 {
+    root * /usr/share/caddy
+    file_server
+    try_files {path} /index.html
+    templates {
+        mime text/javascript application/javascript
+        between %% %%
     }
 }
