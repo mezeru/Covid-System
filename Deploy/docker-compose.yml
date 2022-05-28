@@ -1,0 +1,55 @@
+version: "3"
+services:
+  Iscov-19:
+    image: "jermpro0/iscov19:v5"
+    ports: 
+      - 3000:8080
+    environment:
+      FHIR_ENDPOINT: "http://localhost:8080/fhir"
+      OPENEHR_ENDPOINT: "http://localhost:8080/ehrbase/rest/openehr/v1"
+      EHRSCAPE_ENDPOINT: "http://localhost:8080/ehrbase/rest/ecis/v1"
+  ehrbase:
+    image: ehrbase/ehrbase:next
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/ehrbase"
+      SPRING_DATASOURCE_USERNAME: ehrbase
+      SPRING_DATASOURCE_PASSWORD: ehrbase
+      SERVER_AQLCONFIG_USEJSQUERY: "false"
+      SERVER_NODENAME: "localhost"
+      WEB_CORS_ALLOWEDORIGINPATTERNS: "*"
+      WEB_CORS_ALLOWEDMETHODS: "GET,PUT,DELETE,POST,OPTIONS"
+      WEB_CORS_ALLOWCREDENTIALS: "true"
+    depends_on:
+      - db
+  db:
+    image: postgres:13.4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./cloud-db.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: postgres
+    
+  fhir:
+    image: "hapiproject/hapi:v5.3.0"
+    environment:
+      spring.datasource.url: "jdbc:postgresql://db:5432/hapi"
+      spring.datasource.username: hapi
+      spring.datasource.password: hapi
+      spring.datasource.driverClassName: org.postgresql.Driver
+      hapi.fhir.subscription.resthook_enabled: "true"
+      hapi.fhir.subscription.websocket_enabled: "true"
+      hapi.fhir.client_id_strategy: ANY
+    
+  caddy:
+    image: caddy:2.4.1
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  db-data:
+  caddy_data:
+  caddy_config:
