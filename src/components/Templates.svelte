@@ -24,7 +24,8 @@ import { fly } from "svelte/transition";
   };
 
   const handleClick = async () => {
-    if (files[0].name.slice(-4).toLowerCase() == ".opt") {
+
+    if ( files && files[0].name.slice(-4).toLowerCase() == ".opt") {
       try {
         const r = await openehr.post(
           "/definition/template/adl1.4",
@@ -48,6 +49,8 @@ import { fly } from "svelte/transition";
         if (e.response.status == 415 || e.response.status == 400) {
           alert("Not a Valid XML Template");
         }
+        
+  
       }
     } else {
       alert("Upload an OPT or XML File Only");
