@@ -37,3 +37,7 @@ The Interoperable Healthcare System for COVID follows a modular and scalable arc
 - HapiFHIR: For organizations that prefer not to use FHIR, a backend is created to handle the data exchange and storage. HapiFHIR is used as the server-side component to manage the communication between the frontend and the backend. It facilitates the storage of patient demographic data and ensures interoperability with other healthcare systems.
 
 - EHRid: The EHRid serves as a unique identifier that links the patient medical data stored in EHRbase with the patient demographic data stored in HapiFHIR. This identifier enables the seamless integration of the two databases and ensures that the complete patient record is accessible when needed.
+
+## Patient Dashboard
+
+![image](https://github.com/mezeru/ISCov-19/assets/57724250/92821487-91e6-4e89-b6a7-bffe50ae8890)
