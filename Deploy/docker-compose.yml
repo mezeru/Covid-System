@@ -14,6 +14,8 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/ehrbase"
       SPRING_DATASOURCE_USERNAME: ehrbase
       SPRING_DATASOURCE_PASSWORD: ehrbase
+      DB_USER_ADMIN: ehrbase
+      DB_PASS_ADMIN: ehrbase
       SERVER_AQLCONFIG_USEJSQUERY: "false"
       SERVER_NODENAME: "localhost"
       WEB_CORS_ALLOWEDORIGINPATTERNS: "*"
