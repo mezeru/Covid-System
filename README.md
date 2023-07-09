@@ -25,7 +25,11 @@ The project consists of several components and technologies working together to 
 ## System Architecture
 The Interoperable Healthcare System for COVID follows a modular and scalable architecture. The key components and their interactions are as follows:
 
+- Implementation with Backend
 ![image](https://github.com/mezeru/ISCov-19/assets/57724250/fa4f639c-5371-4fd6-9619-9a7d395c62c5)
+
+- Implementation with HapiFHIR
+![image](https://github.com/mezeru/ISCov-19/assets/57724250/38348dd7-b81e-4a5f-8103-0b29635ea420)
 
 
 - meblocks-ui: A library built on top of Svelte that facilitates the creation of OpenEHR templates for creating assessment forms. It provides a user-friendly interface for designing and customizing the templates.
@@ -38,6 +42,20 @@ The Interoperable Healthcare System for COVID follows a modular and scalable arc
 
 - EHRid: The EHRid serves as a unique identifier that links the patient medical data stored in EHRbase with the patient demographic data stored in HapiFHIR. This identifier enables the seamless integration of the two databases and ensures that the complete patient record is accessible when needed.
 
+## OPD and Assessment Templates
+
+![image](https://github.com/mezeru/ISCov-19/assets/57724250/53cb8b10-d8ed-4779-931d-15dbbdc45d96)
+
+![image](https://github.com/mezeru/ISCov-19/assets/57724250/c24df985-d28e-4c36-b91a-3b84d5d4fbda)
+
+
+
 ## Patient Dashboard
 
 ![image](https://github.com/mezeru/ISCov-19/assets/57724250/92821487-91e6-4e89-b6a7-bffe50ae8890)
+
+![image](https://github.com/mezeru/ISCov-19/assets/57724250/fb938f3a-2c42-4670-b062-e9a1c5f3456d)
+
+![image](https://github.com/mezeru/ISCov-19/assets/57724250/70636e5c-c8e2-4d23-93ba-66862ef5b96f)
+
+
