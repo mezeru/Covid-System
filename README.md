@@ -25,10 +25,10 @@ The project consists of several components and technologies working together to 
 ## System Architecture
 The Interoperable Healthcare System for COVID follows a modular and scalable architecture. The key components and their interactions are as follows:
 
-- Implementation with Backend
+### Implementation with Backend
 ![image](https://github.com/mezeru/ISCov-19/assets/57724250/fa4f639c-5371-4fd6-9619-9a7d395c62c5)
 
-- Implementation with HapiFHIR
+### Implementation with HapiFHIR
 ![image](https://github.com/mezeru/ISCov-19/assets/57724250/38348dd7-b81e-4a5f-8103-0b29635ea420)
 
 
