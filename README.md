@@ -1,9 +1,9 @@
 # Interoperable System for COVID 19
 
-### Introduction
+## Introduction
 The Interoperable Healthcare System for COVID is a project that aims to create a comprehensive and interoperable solution for managing patient medical and demographic data related to COVID-19. It leverages various standards and technologies such as OpenEHR, FHIR, and SNOMED CT to ensure seamless integration and data exchange between different healthcare systems. The project is built using Svelte, SCSS, EHRbase, HapiFHIR Svelte, TypeScript, PostgreSQL, Tailwind CSS, and Shoelace Style.
 
-### Project Overview
+## Project Overview
 
 The project consists of several components and technologies working together to achieve interoperability and efficient management of healthcare data. The main components are:
 
