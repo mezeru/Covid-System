@@ -36,7 +36,7 @@ The Interoperable Healthcare System for COVID follows a modular and scalable arc
 
 - OpenEHR Templates: The assessment forms created using meblocks-ui are based on the OpenEHR standard. These templates define the structure and content of the data collected during assessments.
 
-- EHRbase: The EHRbase database stores the patient medical data using the OpenEHR standard. The assessment forms created with meblocks-ui are used to capture and store the data in a structured manner. EHRbase ensures data integrity, persistence, and efficient querying capabilities.
+- EHRbase: The EHRbase database stores the patient's medical data using the OpenEHR standard. The assessment forms created with meblocks-ui are used to capture and store the data in a structured manner. EHRbase ensures data integrity, persistence, and efficient querying capabilities.
 
 - HapiFHIR: For organizations that prefer not to use FHIR, a backend is created to handle the data exchange and storage. HapiFHIR is used as the server-side component to manage the communication between the frontend and the backend. It facilitates the storage of patient demographic data and ensures interoperability with other healthcare systems.
 
@@ -47,7 +47,6 @@ The Interoperable Healthcare System for COVID follows a modular and scalable arc
 ![image](https://github.com/mezeru/ISCov-19/assets/57724250/53cb8b10-d8ed-4779-931d-15dbbdc45d96)
 
 ![image](https://github.com/mezeru/ISCov-19/assets/57724250/c24df985-d28e-4c36-b91a-3b84d5d4fbda)
-
 
 
 ## Patient Dashboard
