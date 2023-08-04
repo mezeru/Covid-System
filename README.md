@@ -50,6 +50,7 @@ The Interoperable Healthcare System for COVID follows a modular and scalable arc
 
 
 
+
 ## Patient Dashboard
 
 ![image](https://github.com/mezeru/ISCov-19/assets/57724250/92821487-91e6-4e89-b6a7-bffe50ae8890)
